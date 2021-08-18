@@ -1,14 +1,14 @@
-title:              Clean Blog
-email:              your-email@example.com
-description:        A Blog Theme by Start Bootstrap
-author:             Start Bootstrap
+title:              Deep Robotics
+email:              kulunu@gmail.com
+description:        Research on Deep learning methods for Robotic Manipulation
+author:             Kulunu Osanda
 baseurl:            "/startbootstrap-clean-blog-jekyll"
 url:                "https://startbootstrap.github.io"
 
 # Social Profiles
-twitter_username:   SBootstrap
-github_username:    StartBootstrap
-facebook_username:  StartBootstrap
+twitter_username:   KulunuOsanda
+github_username:    KulunuOS
+facebook_username:  
 instagram_username:  
 linkedin_username:
 
