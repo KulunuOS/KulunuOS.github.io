@@ -2,8 +2,8 @@ title:              Deep Robotics
 email:              kulunu@gmail.com
 description:        Research on Deep learning methods for Robotic Manipulation
 author:             Kulunu Osanda
-baseurl:            "/startbootstrap-clean-blog-jekyll"
-url:                "https://startbootstrap.github.io"
+baseurl:            ""
+url:                "https://kulunu.github.io"
 
 # Social Profiles
 twitter_username:   KulunuOsanda
