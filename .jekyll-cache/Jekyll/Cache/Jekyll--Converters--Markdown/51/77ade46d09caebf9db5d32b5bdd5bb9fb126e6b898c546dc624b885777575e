@@ -1,0 +1,12 @@
+I"u<h2 id="introduction">Introduction</h2>
+
+<p>Realsense 435i and a custom gazebo world is implemented in this tutorial.</p>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<ul>
+  <li><em>Realsense gazebo description</em> - https://github.com/issaiass/realsense2_description</li>
+  <li><em>Realsense plugin</em> - https://github.com/pal-robotics/realsense_gazebo_plugin</li>
+</ul>
+
+:ET

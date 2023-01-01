@@ -1,0 +1,23 @@
+I"ý<h2 id="introduction">Introduction</h2>
+
+<p>Realsense 435i and a custom gazebo world is implemented in this tutorial.</p>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<ul>
+  <li><strong>Realsense model description</strong> - <a href="https://github.com/issaiass/realsense2_description">https://github.com/issaiass/realsense2_description</a></li>
+  <li><strong>Realsense ros plugin</strong> - <a href="https://github.com/pal-robotics/realsense_gazebo_plugin">https://github.com/pal-robotics/realsense_gazebo_plugin</a></li>
+</ul>
+
+<h2 id="implementation">Implementation</h2>
+
+<ol>
+  <li>create the workspace</li>
+  <li>clone the repositories</li>
+  <li>edit and make changes</li>
+  <li>build the workspace</li>
+  <li>roslaunch</li>
+</ol>
+
+<h2 id="results">Results</h2>
+:ET
