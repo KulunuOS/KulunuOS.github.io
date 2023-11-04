@@ -1,0 +1,16 @@
+---
+layout: default
+---
+
+<article class="post">
+  <div class="entry2">
+    {{ content }}
+  </div>
+  <div class="date noprint">
+    {% if page.update %}
+    Last updated on {{ page.update | date: "%B %e, %Y" }}
+    {% else %}
+    Written on {{ page.date | date: "%B %e, %Y" }}
+    {% endif %}
+  </div>
+</article>

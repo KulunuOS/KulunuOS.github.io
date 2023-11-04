@@ -1,0 +1,46 @@
+I"k<h2 id="pre-requisites">Pre-requisites</h2>
+
+<ol>
+  <li>Install Moveit ROS package : https://ros-planning.github.io/moveit_tutorials/doc/getting_started/getting_started.html</li>
+  <li>Moveit installs ROS configuration for Franka Panda Roboty by Default to the same Catkin workspace (Panda Moveit Configuration). If you are using a different robot , you need to prepare the relevant robot configuration.</li>
+  <li>Install move it calibration package to the same catkin workspace and follow the steps:</li>
+</ol>
+
+<h2 id="calibration-step">Calibration step</h2>
+<ol>
+  <li>launch franka ros control in terminal 1</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $  cd ~/ws_moveit &amp;&amp;  source devel/setup.bash
+    $  roslaunch panda_moveit_config franka_control.launch robot_ip:=130.230.36.115 load_gripper:=true use_rviz:=true
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $  roslaunch realsense2_camera rs_camera.launch align_depth:=True color_width:=1280 color_height:=720 color_fps:=30
+</code></pre></div></div>
+
+<p>Follow the steps in tutorial : https://ros-planning.github.io/moveit_tutorials/doc/hand_eye_calibration/hand_eye_calibration_tutorial.html .
+Create the Aruco Marker and re-measure marker size and marker seperation and update the values. continue steps in the tutorial</p>
+
+<p>remember to check markers are accurately detected in the RVIZ. if not move the robot so that it does! (see gifs)</p>
+
+<p>at the end of the tutorial you will have a generated a launch file » handeye_calibration.launch</p>
+
+<p>Launch the calibration file in a new terminal</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $  cd ~/ws_moveit &amp;&amp;  source devel/setup.bash
+    $  cd ~/ws_moveit/src/panda_moveit_config/launch/
+    $  roslaunch handeye_calibration_23_March.launch    ## use the latest calibration
+</code></pre></div></div>
+
+<h2 id="tf2_tools-for-rescue">tf2_tools for rescue</h2>
+<p>rostopic echo /tf_static does not publish camera transformations.
+The link we need to get the extrinsic parameters of the camera is camera_color_optical_frame. other frames are incorrect. you can print the transformation with the help of tf2_tools</p>
+
+<p>to get the cam_2_world ( camera pose in world coordinates)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $  cd ~/tf2_tools  &amp;&amp;  source devel/setup.bash
+    $  rosrun tf2_tools echo2.py panda_link0 camera_color_optical_frame
+</code></pre></div></div>
+<p>to see the transformation open a new terminal and run</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $  rostopic echo /Cam_2_World
+</code></pre></div></div>
+:ET
