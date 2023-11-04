@@ -13,7 +13,7 @@ words: 3619
 
 ## Introduction 
 
-Realsense 435i and a custom gazebo world is implemented in this tutorial.
+Realsense 435i and a custom gazebo world is implemented in this tutorials.
 
 
 ## Dependencies
