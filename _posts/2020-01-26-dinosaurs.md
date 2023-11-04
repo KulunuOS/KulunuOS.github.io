@@ -1,9 +1,14 @@
 ---
 layout: post
 title: "Realsense Depth Camera Simulation in Gazebo"
-subtitle: "How to create a simulation with a realsense camera simulation and a custom gazebo world?"
-date: 2020-01-26 23:45:13 -0400
-background: '/img/posts/Realsense_gazebo.png'
+abstract: "How to create a simulation with a realsense camera simulation and a custom gazebo world?"
+thumbnail: '/images/Realsense_gazebo.png'
+tags: [ ]
+category: Robotic Manipulation
+jquery: true
+slideshow2: true
+time: 15
+words: 3619
 ---
 
 ## Introduction 
