@@ -61,7 +61,7 @@ input {
 
 body {
   margin: 0;
-  background: whitesmoke;
+  background: white;
   color: $darkGray;
   height: 100%;
   display: flex;
@@ -132,6 +132,14 @@ article p {
   font-size: 13px;
 }
 
+.date_post {
+  max-width: 700px;
+  margin: auto;
+  font-style: italic;
+  color: $gray;
+  font-size: 13px;
+}
+
 .metadata .date {
   margin-bottom: 0.5em;
   margin-top: 0.5em;
@@ -150,9 +158,9 @@ article p {
 }
 
 .tag.category {
-  background-color: #aab5bee0;
-  color: white;
-  border-color: #e4ebee;
+  background-color: white;
+  color: black;
+  border-color: white;
 }
 
 .bottom-panel {
