@@ -2,7 +2,7 @@
 layout: post
 title: "Moveit Hand-Eye Calibration Example"
 abstract: "How to create a simulation with a realsense camera simulation and a custom gazebo world?"
-thumbnail: '/images/franka_panda.JPG'
+thumbnail: '/images/hand_eye.jpg'
 tags: [ ]
 category: Robotic Manipulation
 jquery: true
