@@ -595,7 +595,7 @@ nav {
   a {
     margin-left: 20px;
     color: $darkGray;
-    text-align: right;
+    text-align: middle;
     font-weight: 300;
     letter-spacing: 1px;
 
@@ -611,8 +611,9 @@ nav {
 //
 
 .entry {
-  max-width: 700px;
+  max-width: 750px;
   margin: auto;
+  text-align: justify;
 }
 
 .entry2 {
