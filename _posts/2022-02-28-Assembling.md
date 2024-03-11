@@ -21,6 +21,7 @@ This article is organized in gthe following way :
 1. Cognition for robotic manipulation
 2. Assembling  as a manipulation task
 3. State of the Art
+4. ?
 
 
 
