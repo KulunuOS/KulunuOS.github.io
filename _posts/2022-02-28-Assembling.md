@@ -13,24 +13,43 @@ words: 3619
 ---
 ## {{ page.title }}
 
+<div align="center">
+  <video width="640" height="280" autoplay="true" muted="true" loop="true" style="margin-top: 50px;">
+    <source src="https://assets.mixkit.co/videos/preview/mixkit-girl-putting-together-a-figure-with-legos-42182-large.mp4" type="video/mp4" />
+  </video>
+  <p style="text-align: center; font-size: 12px"> image source: <a href="https://mixkit.co/free-stock-video/girl-putting-together-a-figure-with-legos-42182/">  mixkit.com</a></p>
+</div>
+
 As a kid, you might have had toys that required you to put together and build up meaningful structures. Even though it seems a childish task, would you believe it is a complex problem for highly boasted robotic technology?
 is a task that requires cognition. The cognition capabilities for the robots are enabled via concepts such as perception, motion planning and learning algorithms.
 
+
+
+
+
 This article is organized in gthe following way :
 
-1. Cognition for robotic manipulation
-2. Assembling  as a manipulation task
-3. State of the Art
-4. ?
+| Section                                  | Questions                                           |
+|------------------------------------------|-----------------------------------------------------|
+| 1. [The bigger picture](#the-bigger-picture) | - Where does robotic assembly manipulation stand in the bigger picture of process manufacturing? - How is it all connected? |
+| 2. Assembling as a manipulation task    | - How to define robotic assembly manipulation? - How is it different/similar from assembly process planning? |
+| 3. Cognition for robotic manipulation   | - How to endow cognitive capabilities for robots to perform assembling? |
+| 4. State of the Art                     | - What has been studied? - What has been achieved? - Challenges? - Research gaps? - Possible contributions? |
 
 
+---
+### 1. The bigger picture
 
-### Cognition for robotic manipulation
+Assembling is a core aspect in manuifacturing processes. Hence, most of the past studies on object assembling has been from the point of view of process planning in manufacturing industry. The term **Assembly Planning** describes the process of combining several parts to a final product. Assembly Sequence Planning, Assembly line balancing, Assembly Path Planning. The importance of Assembly planning is maintenance, cost and time effectiveness, repair etc. They look at Ap as valuble feedback for design stage of products to achieve above targets in manufacturing process.
 
-Robotic Manipulation has advanced drastically in the recent times. Availability of higher D0F freedom robots, sensors, computing capabilities and algorithms. Cognition means the capability of the robotic setup to sense and analyze the environment and plan and execute acriopns tp o accomplish goals. such primary goals include grasping, inspecting, painting, welding, assembling etc. The task of robotic assembling is process that extends from grasping. 
+However, the intended goals from persepective of cognitive robotics is different. Explain the difference. In above case the process planner ( a human) reveiews ( find more differences) complex constraints such as friction etc. In robotics the robot should take the decisions. This more difficult and might not have solutions all the time. 
+
+probably a diagram explaining the domain
+
+But it is important to observe how humans think and then try to develop robot cognition through the same pattern of thinking. 
 
 
-### Assembling as a manipulation task
+### 2. Assembling as a manipulation task
 
 A manipulation task involves primary components such as a single or multiple robotic manipulators, a scene consisting of objects to be manipulated in their initial state and a goal state to be acheived. In certain cases, a human operator could also collaborate with a robot to perform the task.
 
@@ -38,16 +57,16 @@ In an assembly manipulation task, there could be either individual objects or pa
 
 The feasibility of an assembly task depends on several constraints. The objects and final assembly must be within the workspace of the robot. The assembly task should be achievable within the task space of the robot. An assembly sequence must exist to rearrange the objects from their initial state to final state. Furthermore, the robot should be capable of following a motion plan to acheive each step in the sequence.
 
+### Cognition for robotic assembly manipulation
 
-
+Robotic Manipulation has advanced drastically in the recent times. Availability of higher D0F freedom robots, sensors, computing capabilities and algorithms. Cognition means the capability of the robotic setup to sense and analyze the environment and plan and execute acriopns tp o accomplish goals. such primary goals include grasping, inspecting, painting, welding, assembling etc. The task of robotic assembling is process that extends from grasping. 
 
 
 ### State of the Art
- Most of the earlier works has been on assembly sequence planning for product design and manufacturing.
 
 
 
-#### Geometrical methods
+#### Graph Based methods
 
 
 
@@ -68,3 +87,13 @@ The feasibility of an assembly task depends on several constraints. The objects 
 3. Language based methods CLIPort
 
 4. RL methods
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2023/05/IndustReal_Simtoreal.gif" align="center"/>
+
+### References
+
+<ol>
+<li id="smith2020">
+<p>Smith, J. (2020). <em>The Title of the Article</em>. <em>Journal Name</em>.</p>
+</li>
+</ol>
