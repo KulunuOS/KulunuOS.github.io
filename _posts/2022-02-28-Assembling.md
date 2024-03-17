@@ -68,7 +68,7 @@ Robotic Manipulation has advanced drastically in the recent times. Availability 
 The process of assembly sequence planning is a highly constrained problem. However, it is easier to define the constraints when the assembly is in assembled state. Therefore, **Assembly by Disassembly Planning (ADP)** has been the most go-to approaches when planning assembly sequences. They also fall under graph based methods
 
 Explain the historical methods from review paper here >> emphasize the use of geometrical analysis.
-then go to <a href="#Ghandi2015">Ghandi et al(2015)</a> "assemble them all" and mention about use of physics simulations for cheching collision. and they dont consider stability, gravity etc
+then go to <a href="#Ghandi2015">Ghandi et al(2015)</a> "assemble them all" and mention about use of physics simulations for cheching collision. and they dont consider stability, gravity etc 
 
 Introduc ASAP which formulate the disassembly graph as a GNN solution.
 
@@ -111,7 +111,7 @@ Multi-level reasoning paper as a transformer based solution -- is also a ADP sol
 ### References
 
 <ol>
-<li id="Ghandi2015">
+<li id="Ghandi2015" class="highlightable">
 <p>Ghandi, S., & Masehian, E. (2015). <em>Review and taxonomies of assembly and disassembly path planning problems and approaches</em>. <em>Computer-Aided Design, 67–68, 58–86. https://doi.org/10.1016/j.cad.2015.05.001
 </em>.</p>
 </li>
@@ -131,6 +131,52 @@ Multi-level reasoning paper as a transformer based solution -- is also a ADP sol
 </em>.</p>
 </li>
 
+<li id="Zhang2022">
+<p>Zhang, R., Kong, T., Wang, W., Han, X., & You, M. (2022). <em>3D Part Assembly Generation with Instance Encoded Transformer</em>. IEEE Robotics and Automation Letters, 7(4). [https://doi.org/10.1109/LRA.2022.3188098](https://doi.org/10.1109/LRA.2022.3188098).</p>
+</li>
 
+<li id="Tian2023a">
+<p>Tian, Y., Willis, K. D. D., Omari, B. al, Luo, J., Ma, P., Li, Y., Javid, F., Gu, E., Jacob, J., Sueda, S., Li, H., Chitta, S., & Matusik, W. (2023). <em>ASAP: Automated Sequence Planning for Complex Robotic Assembly with Physical Feasibility</em>. [http://arxiv.org/abs/2309.16909](http://arxiv.org/abs/2309.16909).</p>
+</li>
+
+<li id="Tian2022">
+<p>Tian, Y., Xu, J., Li, Y., Luo, J., Sueda, S., Li, H., Willis, K. D. D., & Matusik, W. (2022). <em>Assemble Them All</em>. ACM Transactions on Graphics, 41(6). [https://doi.org/10.1145/3550454.3555525](https://doi.org/10.1145/3550454.3555525).</p>
+</li>
+
+<li id="Narang2022">
+<p>Narang, Y., Storey, K., Akinola, I., Macklin, M., Reist, P., Wawrzyniak, L., Guo, Y., Moravanszky, A., State, G., Lu, M., Handa, A., & Fox, D. (2022). <em>Factory: Fast Contact for Robotic Assembly</em>. Robotics: Science and Systems. [https://doi.org/10.15607/RSS.2022.XVIII.035](https://doi.org/10.15607/RSS.2022.XVIII.035).</p>
+</li>
+
+<li id="Huang2020">
+<p>Huang, J., Zhan, G., Fan, Q., Mo, K., Shao, L., Chen, B., Guibas, L., & Dong, H. (2020). <em>Generative 3D part assembly via dynamic graph learning</em>. Advances in Neural Information Processing Systems, 2020-December.</p>
+</li>
+
+<li id="Wu2023">
+<p>Wu, R., Tie, C., Du, Y., Zhao, Y., & Dong, H. (2023). <em>Leveraging SE(3) Equivariance for Learning 3D Geometric Shape Assembly</em>. [http://arxiv.org/abs/2309.06810](http://arxiv.org/abs/2309.06810).</p>
+</li>
+
+<li id="Zhu2023b">
+<p>Zhu, X., Jha, D. K., Romeres, D., Sun, L., Tomizuka, M., & Cherian, A. (2023). <em>Multi-level Reasoning for Robotic Assembly: From Sequence Inference to Contact Selection</em>. [http://arxiv.org/abs/2312.10571](http://arxiv.org/abs/2312.10571).</p>
+</li>
+
+<li id="Chen2022">
+<p>Chen, Y. C., Li, H., Turpin, D., Jacobson, A., & Garg, A. (2022). <em>Neural Shape Mating: Self-Supervised Object Assembly with Adversarial Shape Priors</em>. Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition, 2022-June. [https://doi.org/10.1109/CVPR52688.2022.01239](https://doi.org/10.1109/CVPR52688.2022.01239).</p>
+</li>
+
+<li id="Li2023">
+<p>Li, Y., Zeng, A., & Song, S. (2023). <em>Rearrangement Planning for General Part Assembly</em>. [https://general-part-assembly.github.io/](https://general-part-assembly.github.io/).</p>
+</li>
+
+<li id="Harish2022">
+<p>Harish, A. N., Nagar, R., & Raman, S. (2022). <em>RGL-NET: A Recurrent Graph Learning framework for Progressive Part Assembly</em>. Proceedings - 2022 IEEE/CVF Winter Conference on Applications of Computer Vision, WACV 2022. [https://doi.org/10.1109/WACV51458.2022.00072](https://doi.org/10.1109/WACV51458.2022.00072).</p>
+</li>
 
 </ol>
+
+
+
+
+
+
+
+
