@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Assembling things with robots"
+title: "Assembling objects with robots"
 abstract: "How to create a simulation with a realsense camera simulation and a custom gazebo world?"
 thumbnail: '/images/assembly.jpg'
 tags: [ ]
@@ -20,21 +20,19 @@ words: 3619
   <p style="text-align: center; font-size: 12px"> image source: <a href="https://mixkit.co/free-stock-video/girl-putting-together-a-figure-with-legos-42182/">  mixkit.com</a></p>
 </div>
 
-As a kid, you might have had toys that required you to put together and build up meaningful structures. Even though it seems a childish task, would you believe it is a complex problem for highly boasted robotic technology?
-is a task that requires cognition. The cognition capabilities for the robots are enabled via concepts such as perception, motion planning and learning algorithms.
+As a kid, you probably have had building blocks or puzzels that you put together and build up meaningful assemblies. These toys have a close relationship with the development of cognition in early childhood. As humans our skills develops rapidly with experience as we age until these tasks become so ordinary. However, attempting to endow these cognitive skills in robots is a massive challenge and a major research emphasis in the field of cognitive robotics. Cognitive robotics is a subfield of robotics that focuses on enabling robots to perform cognitive functions with artificial intelligence.
+
+This article is a literature review on the past and recent research related to robotic assembly. It belongs to large reserach domain called "assembly planing" which is jointly studied among fields such as  Computer Aided design(CAD), Manufacturing Industry, Robotics etc. However, the expected research goals, problem definitions and solutions might be different from each other. Though it might not be flawless, the article also attempt to identify, analyze and establish the idea of robotic assembly as a seperate research problem. While AI is a combination of various approaches to address a certain problem, robotic assembling has been also addressed under several methods such as Visual language models, Reinforecement learning, 3D perception and Computer vision etc. 
+
+For the convenience of the reader please follow the organisation and relevant queries of the article below :
 
 
-
-
-
-This article is organized in gthe following way :
-
-| Section                                  | Questions                                           |
-|------------------------------------------|-----------------------------------------------------|
-| 1. [The bigger picture](#the-bigger-picture) | - Where does robotic assembly manipulation stand in the bigger picture of process manufacturing? - How is it all connected? |
-| 2. Assembling as a manipulation task    | - How to define robotic assembly manipulation? - How is it different/similar from assembly process planning? |
-| 3. Cognition for robotic manipulation   | - How to endow cognitive capabilities for robots to perform assembling? |
-| 4. State of the Art                     | - What has been studied? - What has been achieved? - Challenges? - Research gaps? - Possible contributions? |
+| | Section                                  | Questions                                           |
+| |------------------------------------------|-----------------------------------------------------|
+|1| [The bigger picture](#the-bigger-picture) | - Where does robotic assembly manipulation stand in the bigger picture of process manufacturing? - How is it all connected? |
+|2| Assembling as a manipulation task    | - How to define robotic assembly manipulation? - How is it different/similar from assembly process planning? |
+|3| Cognition for robotic manipulation   | - How to endow cognitive capabilities for robots to perform assembling? |
+|4| State of the Art                     | - What has been studied? - What has been achieved? - Challenges? - Research gaps? - Possible contributions? |
 
 
 ---
@@ -67,6 +65,10 @@ Robotic Manipulation has advanced drastically in the recent times. Availability 
 
 
 #### Graph Based methods
+
+ASAP and Assemble them all
+
+
 
 
 
