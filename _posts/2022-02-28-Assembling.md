@@ -111,12 +111,12 @@ Multi-level reasoning paper as a transformer based solution -- is also a ADP sol
 ### References
 
 <ol>
-<li id="Ghandi2015)">
+<li id="Ghandi2015">
 <p>Ghandi, S., & Masehian, E. (2015). <em>Review and taxonomies of assembly and disassembly path planning problems and approaches</em>. <em>Computer-Aided Design, 67–68, 58–86. https://doi.org/10.1016/j.cad.2015.05.001
 </em>.</p>
 </li>
 
-<li id="Tian2022)">
+<li id="Tian2022">
 <p>Tian, Y., Xu, J., Li, Y., Luo, J., Sueda, S., Li, H., Willis, K. D. D., & Matusik, W. (2022). <em>Assemble Them All</em>. <em>ACM Transactions on Graphics, 41(6). https://doi.org/10.1145/3550454.3555525
 </em>.</p>
 </li>
