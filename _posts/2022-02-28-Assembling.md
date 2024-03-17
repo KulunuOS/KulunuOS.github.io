@@ -22,8 +22,9 @@ words: 3619
 
 As a kid, you probably have had building blocks or puzzels that you put together and build up meaningful assemblies. These toys have a close relationship with the development of cognition in early childhood. As humans our skills develops rapidly with experience as we age until these tasks become so ordinary. However, attempting to endow these cognitive skills in robots is a massive challenge and a major research emphasis in the field of cognitive robotics. Cognitive robotics is a subfield of robotics that focuses on enabling robots to perform cognitive functions with artificial intelligence.
 
-This article is a literature review on the past and recent research related to robotic assembly. It belongs to a wide research domain called "assembly planing" which is jointly studied among fields such as  Computer Aided design(CAD), Manufacturing Industry, Robotics etc. However, expected research goals, problem definitions and solutions ampng the respective fields might be different from each other. This article attempts to identify, analyze and establish the idea of robotic assembly as a seperate research problem. While AI is a combination of various approaches to solve a certain problem autonomously, robotic assembling has been also approached using several methods such as visual language models, Reinforecement learning, 3D perception and Computer vision etc. However, the major emphasis of this article is the use of 3D perception for robotic assembly.
+This article is a literature review on the past and recent research related to robotic assembly. It belongs to a wide research domain called "assembly planing" which is jointly studied among fields such as  Computer Aided design(CAD), Manufacturing Industry, Robotics etc. However, expected research goals, problem definitions and solutions among the respective fields might be different from each other. This article attempts to identify, analyze and establish the idea of robotic assembly as a seperate research problem. While AI is a combination of various approaches to solve a certain problem autonomously, robotic assembling has been also approached using several methods such as visual language models, Reinforecement learning, 3D perception and Computer vision etc. 
 
+**However, the major emphasis of this article is robotic assembly manipulation via 3D pereception**.
 For the convenience of the reader please follow the organisation and relevant queries of the article below :
 
 
@@ -62,11 +63,26 @@ Robotic Manipulation has advanced drastically in the recent times. Availability 
 
 ### State of the Art
 
+### 1. Assembly Sequence planning
+
+The process of assembly sequence planning is a highly constrained problem. However, it is easier to define the constraints when the assembly is in assembled state. Therefore, **Assembly by Disassembly Planning (ADP)** has been the most go-to approaches when planning assembly sequences. They also fall under graph based methods
+
+Explain the historical methods from review paper here >> emphasize the use of geometrical analysis.
+then go to <a href="#Ghandi2015">Ghandi et al(2015)</a> "assemble them all" and mention about use of physics simulations for cheching collision. and they dont consider stability, gravity etc
+
+Introduc ASAP which formulate the disassembly graph as a GNN solution.
+
+Multi-level reasoning paper as a transformer based solution -- is also a ADP solution
+
+### 2. Assembly Pose estimation
 
 
-#### Graph Based methods
+3. Motion planning
 
-ASAP and Assemble them all
+
+#### Graph Based approaches
+
+
 
 
 
@@ -95,7 +111,26 @@ ASAP and Assemble them all
 ### References
 
 <ol>
-<li id="smith2020">
-<p>Smith, J. (2020). <em>The Title of the Article</em>. <em>Journal Name</em>.</p>
+<li id="Ghandi2015)">
+<p>Ghandi, S., & Masehian, E. (2015). <em>Review and taxonomies of assembly and disassembly path planning problems and approaches</em>. <em>Computer-Aided Design, 67–68, 58–86. https://doi.org/10.1016/j.cad.2015.05.001
+</em>.</p>
 </li>
+
+<li id="Tian2022)">
+<p>Tian, Y., Xu, J., Li, Y., Luo, J., Sueda, S., Li, H., Willis, K. D. D., & Matusik, W. (2022). <em>Assemble Them All</em>. <em>ACM Transactions on Graphics, 41(6). https://doi.org/10.1145/3550454.3555525
+</em>.</p>
+</li>
+
+<li id="Tian2023)">
+<p>Tian, Y., Willis, K. D. D., Omari, B. al, Luo, J., Ma, P., Li, Y., Javid, F., Gu, E., Jacob, J., Sueda, S., Li, H., Chitta, S., & Matusik, W. (2023) <em> ASAP: Automated Sequence Planning for Complex Robotic Assembly with Physical Feasibility</em>. <em>http://arxiv.org/abs/2309.16909
+</em>.</p>
+</li>
+
+<li id="Zhu2023)">
+<p>Zhu, X., Jha, D. K., Romeres, D., Sun, L., Tomizuka, M., & Cherian, A. (2023) <em> Multi-level Reasoning for Robotic Assembly: From Sequence Inference to Contact Selection</em>. <em> http://arxiv.org/abs/2312.10571
+</em>.</p>
+</li>
+
+
+
 </ol>
