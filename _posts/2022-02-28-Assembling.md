@@ -56,10 +56,16 @@ In an assembly manipulation task, there could be either individual objects or pa
 
 The feasibility of an assembly task depends on several constraints. The objects and final assembly must be within the workspace of the robot. The assembly task should be achievable within the task space of the robot. An assembly sequence must exist to rearrange the objects from their initial state to final state. Furthermore, the robot should be capable of following a motion plan to acheive each step in the sequence.
 
+<figure align="center" style="padding-top: 20px; padding-bottom: 20px;">
+  <img src="https://developer-blogs.nvidia.com/wp-content/uploads/2023/05/IndustReal_Simtoreal.gif"/>
+  <figcaption>  <p style="text-align: center; font-size: 12px"> source: <a href="https://developer.nvidia.com/blog/transferring-industrial-robot-assembly-tasks-from-simulation-to-reality/">  Transferring Industrial Robot Assembly Tasks from Simulation (NVIDIA Isaac) to Real</a></p> </figcaption>
+</figure>
+
 ### Cognition for robotic assembly manipulation
 
 Robotic Manipulation has advanced drastically in the recent times. Availability of higher D0F freedom robots, sensors, computing capabilities and algorithms. Cognition means the capability of the robotic setup to sense and analyze the environment and plan and execute acriopns tp o accomplish goals. such primary goals include grasping, inspecting, painting, welding, assembling etc. The task of robotic assembling is process that extends from grasping. 
 
+explain the steps: sequence planning, pose , motion planning etc
 
 ### State of the Art
 
