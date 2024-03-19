@@ -78,7 +78,7 @@ then go to <a href="#Ghandi2015">Ghandi et al(2015)</a> "assemble them all" and 
 
 Introduc ASAP which formulate the disassembly graph as a GNN solution.
 
-Multi-level reasoning paper as a transformer based solution -- is also a ADP solution
+Multi-level reasoning paper as a transformer based solution -- is also a ADP solution.
 
 ### 2. Assembly Pose estimation
 
