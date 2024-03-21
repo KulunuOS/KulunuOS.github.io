@@ -71,14 +71,14 @@ explain the steps: sequence planning, pose , motion planning etc
 
 ### 1. Assembly Sequence planning
 
-The process of assembly sequence planning is a highly constrained problem. However, it is easier to define the constraints when the assembly is in assembled state. Therefore, **Assembly by Disassembly Planning (ADP)** has been the most go-to approaches when planning assembly sequences. They also fall under graph based methods
+Assembly sequence planning is very difficult to formulate into an algorithm due to constrained nature of the problem. Fundamentally an assembly is constrained by the contacts with other parts.. However, it is easier to define the constraints when the assembly is in assembled state. Therefore, **Assembly by Disassembly Planning (ADP)** has been the most go-to approaches when planning assembly sequences. They also fall under graph based methods
 
 Explain the historical methods from review paper here >> emphasize the use of geometrical analysis.
 then go to <a href="#Ghandi2015">Ghandi et al(2015)</a> "assemble them all" and mention about use of physics simulations for cheching collision. and they dont consider stability, gravity etc 
 
-Introduc ASAP which formulate the disassembly graph as a GNN solution.
+Introduc <a href="#Tian2023"> ASAP.(2023)</a> which formulate the disassembly graph as a GNN solution.
 
-Multi-level reasoning paper as a transformer based solution -- is also a ADP solution.
+ <a href="#Zhu2023b"> Zhu et al.(2023)</a> introduced Multi-level reasoning paper as a transformer based solution -- is also a ADP solution.
 
 ### 2. Assembly Pose estimation
 
