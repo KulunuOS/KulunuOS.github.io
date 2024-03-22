@@ -20,6 +20,13 @@ words: 3619
   <p style="text-align: center; font-size: 12px"> image source: <a href="https://mixkit.co/free-stock-video/girl-putting-together-a-figure-with-legos-42182/">  mixkit.com</a></p>
 </div>
 
+<figure align="center" style="padding-top: 20px; padding-bottom: 20px;">
+<video width="640" height="280" autoplay="true" muted="true" loop="true" style="margin-top: 50px;">
+    <source src="https://assets.mixkit.co/videos/preview/mixkit-girl-putting-together-a-figure-with-legos-42182-large.mp4" type="video/mp4" />
+  </video>
+  <p style="text-align: center; font-size: 12px"> image source: <a href="https://mixkit.co/free-stock-video/girl-putting-together-a-figure-with-legos-42182/">  mixkit.com</a></p>
+</figure>
+
 As a kid, you probably have had building blocks or puzzels that you put together and build up meaningful assemblies. These toys have a close relationship with the development of cognition in early childhood. As humans our skills develops rapidly with experience as we age until these tasks become so ordinary. However, attempting to endow these cognitive skills in robots is a massive challenge and a major research emphasis in the field of cognitive robotics. Cognitive robotics is a subfield of robotics that focuses on enabling robots to perform cognitive functions with artificial intelligence.
 
 This article is a literature review on the past and recent research related to robotic assembly. It belongs to a wide research domain called "assembly planing" which is jointly studied among fields such as  Computer Aided design(CAD), Manufacturing Industry, Robotics etc. However, expected research goals, problem definitions and solutions among the respective fields might be different from each other. This article attempts to identify, analyze and establish the idea of robotic assembly as a seperate research problem. While AI is a combination of various approaches to solve a certain problem autonomously, robotic assembling has been also approached using several methods such as visual language models (SORNET), Reinforecement learning, 3D perception and Computer vision etc. 
