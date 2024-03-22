@@ -102,7 +102,7 @@ Later on, a study called <a href="#Tian2022"> "assemble them all"</a> expolits a
 
 
 <div style="flex: 1; margin-right: 10px;">
-    <img src="https://asap.csail.mit.edu/static/images/SearchTree.jpg" style="width: 100%;">
+    <img src="http://asap.csail.mit.edu/static/images/SearchTree.jpg" style="width: 100%;">
     <p style="text-align: center;font-size: 12px; margin-top: 5px;"> (b) Disassembly tree </p>
     <p style="text-align: center; margin-top: -10px; font-size: 12px"> source: <a href="http://asap.csail.mit.edu/">  ASAP:Automated Sequence Planning for Complex Robotic Assembly with Physical Feasibility</a></p>
 </div>
