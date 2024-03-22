@@ -100,6 +100,30 @@ Later on, a study called <a href="#Tian2022"> "assemble them all"</a> expolits a
 
 <a href="#Tian2023"> ASAP.(2023)</a> is a recent study which adress all the shortcoming mentioned in above method. Their study considers the feasibiltty in assembly sequence planning with suitable assembly poses which are stable under gravity. This is an important  consideration when implementing a sequence planner for a practical problem such as roboric assembly. Furthermore, they formulate the tree search algorithm to a Graph Neural Network (GNN) that learns on the pointclouds of input parts and infer the next part to be disassemnbled. However, the approach doesn't seem to be robust against the number of parts in the assembly; meaning the GNN has to be trained for each set of assemblies with similar number of parts.
 
+<div margin-right: 10px;">
+    <video width="320" height="240" autoplay muted loop>
+        <source src="http://asap.csail.mit.edu/static/videos/robot-01235.mp4" type="video/mp4">
+    </video>
+    <p style="text-align: center; font-size: 12px; margin-top: 5px;"> (a) Physically feasible assembly planning </p>
+</div>
+
+<div  margin-right: 10px;">
+    <img src="http://asap.csail.mit.edu/static/images/SearchTree.jpg" style="width: 50%;">
+    <p style="text-align: center;font-size: 12px; margin-top: 5px;"> (b) Disassembly tree </p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <span id="global_caption_ref"></span>
 
 <div style="margin-top: 20px; margin-bottom: 20px;">
@@ -112,25 +136,6 @@ Later on, a study called <a href="#Tian2022"> "assemble them all"</a> expolits a
         </div>
         <div style="flex: 1; margin-right: 10px;">
             <img src="http://asap.csail.mit.edu/static/images/SearchTree.jpg" style="width: 100%;">
-            <p style="text-align: center;font-size: 12px; margin-top: 5px;"> (b) Disassembly tree </p>
-        </div>
-    </div>
-    <p style="text-align: center; margin-top: -10px; font-size: 12px"> source: <a href="http://asap.csail.mit.edu/">  ASAP:Automated Sequence Planning for Complex Robotic Assembly with Physical Feasibility</a></p>
-</div>
-
-and 
-
-<div style="margin-top: 20px; margin-bottom: 20px;">
-    <div style="display: flex;">
-        <div style="flex: 1; margin-right: 10px;">
-            <video width="320" height="240" controls>
-                <source src="https://asap.csail.mit.edu/static/videos/robot-01235.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <p style="text-align: center; font-size: 12px; margin-top: 5px;"> (a) Physically feasible assembly planning </p>
-        </div>
-        <div style="flex: 1; margin-right: 10px;">
-            <img src="https://asap.csail.mit.edu/static/images/SearchTree.jpg" style="width: 100%;">
             <p style="text-align: center;font-size: 12px; margin-top: 5px;"> (b) Disassembly tree </p>
         </div>
     </div>
