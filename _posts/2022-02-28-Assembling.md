@@ -101,7 +101,7 @@ Later on, a study called <a href="#Tian2022"> "assemble them all"</a> expolits a
 <a href="#Tian2023"> ASAP.(2023)</a> is a recent study which adress all the shortcoming mentioned in above method. Their study considers the feasibiltty in assembly sequence planning with suitable assembly poses which are stable under gravity. This is an important  consideration when implementing a sequence planner for a practical problem such as roboric assembly. Furthermore, they formulate the tree search algorithm to a Graph Neural Network (GNN) that learns on the pointclouds of input parts and infer the next part to be disassemnbled. However, the approach doesn't seem to be robust against the number of parts in the assembly; meaning the GNN has to be trained for each set of assemblies with similar number of parts.
 
 <video width="320" height="240" autoplay muted loop>
-    <source src="http://asap.csail.mit.edu/static/videos/robot-01235.mp4" type="video/mp4">
+    <source src="https://asap.csail.mit.edu/static/videos/robot-01235.mp4" type="video/mp4">
 </video>
 
 
