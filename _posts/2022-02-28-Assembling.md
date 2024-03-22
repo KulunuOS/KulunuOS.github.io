@@ -118,6 +118,24 @@ Later on, a study called <a href="#Tian2022"> "assemble them all"</a> expolits a
     <p style="text-align: center; margin-top: -10px; font-size: 12px"> source: <a href="http://asap.csail.mit.edu/">  ASAP:Automated Sequence Planning for Complex Robotic Assembly with Physical Feasibility</a></p>
 </div>
 
+<div style="margin-top: 20px; margin-bottom: 20px;">
+    <div style="display: flex;">
+        <div style="flex: 1; margin-right: 10px;">
+            <video width="320" height="240" controls>
+                <source src="https://asap.csail.mit.edu/static/videos/robot-01235.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p style="text-align: center; font-size: 12px; margin-top: 5px;"> (a) Physically feasible assembly planning </p>
+        </div>
+        <div style="flex: 1; margin-right: 10px;">
+            <img src="https://asap.csail.mit.edu/static/images/SearchTree.jpg" style="width: 100%;">
+            <p style="text-align: center;font-size: 12px; margin-top: 5px;"> (b) Disassembly tree </p>
+        </div>
+    </div>
+    <p style="text-align: center; margin-top: -10px; font-size: 12px"> source: <a href="http://asap.csail.mit.edu/">  ASAP:Automated Sequence Planning for Complex Robotic Assembly with Physical Feasibility</a></p>
+</div>
+
+
  <a href="#Zhu2023b"> Zhu et al.(2023)</a> introduced a transformer based solution based on ADP.(still under analysis)
 
 
