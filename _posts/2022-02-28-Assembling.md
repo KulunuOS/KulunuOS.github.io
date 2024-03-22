@@ -63,9 +63,13 @@ The feasibility of an assembly task depends on several constraints. The objects 
 
 ### Cognition for robotic assembly manipulation
 
-Robotic Manipulation has advanced drastically in the recent times. Availability of higher D0F freedom robots, sensors, computing capabilities and algorithms. Cognition means the capability of the robotic setup to sense and analyze the environment and plan and execute acriopns tp o accomplish goals. such primary goals include grasping, inspecting, painting, welding, assembling etc. The task of robotic assembling is process that extends from grasping. 
+Cognition can be defined as the capability of the robotic setup to sense and analyze the environment and plan and execute acriopns tp o accomplish goals.Few example for  such primary goals are grasping, inspecting, painting, welding, assembling etc. 
 
-explain the steps: sequence planning, pose , motion planning etc
+The task of robotic assembling is process that extends from grasping. Additionally following comnponents are closely relhated to the cognition associated with assembling with a robot
+
+1. Assembly sequence planning
+2. Assembly pose estimation
+3. planning the motion
 
 ### State of the Art
 
@@ -125,8 +129,8 @@ There is a classification of approaches:
 Generalized approaches : trained on a category of objects can predict on any assembly in the category
 example : can assemble chairs/tables/lamps of any shape. 
 
-misleading ! they say they dont use any prior semantic knowledge but models are conditioned on a category
-generative : learns on a set of points given that they belong to category ( conditioned) can do it on an unseen part! <a href="#Huang2020"> Huang et al.(2020)</a>. uses GNNs to learn the features and relationships between parts.(furniture assenbly)
+Few contradictions in the literature. Although some work claim that they dont use any prior semantic knowledge but models are conditioned on a category that represents some sort of semantic knowledge abouty the assembly.
+Some generative methods learns on a set of points given that they belong to category ( conditioned) can do it on an unseen part! <a href="#Huang2020"> Huang et al.(2020)</a>. uses GNNs to learn the features and relationships between parts.(furniture assenbly)
 
 A similar work  <a href="#Harish2022"> RGL-NET.(2022)</a> focus on progressive part assembly, meaning that starting from any stage the robot can continue to complete the assembly (furniture assenbly)
 Another study <a href="#Zhang2022"> Zhang et al.(2022)</a> presents the capability to estimate assembly poses when the number of input parts is arbitrary or assembly is in mid-process. based an instance endcoded tranformer approach. a (furniture assenbly)
