@@ -22,8 +22,7 @@ banner: /images/tree.jpg
 
   <h2>Kulunu Samarawickrama</h2>
   <p> I am a doctoral researcher at <a href="https://research.tuni.fi/cogrob/"> Cognitive Robotics research group, Tampere University, Finland</a>. My focus is on 3D deep learning research for robotic perception and endowing cognition skills in robotic manipulation.</p>
-  <p> I have have been around many industrial robots as a mechatronic engineer who worked in production and automation since 2017 in Thailand. In 2019, I moved to Finland, where I extended my carrier as a graduate researcher. I am an experienced developer specialized in computer vision, deep learning and robotic software development</p>
-
+ 
   <h3>Research </h3>
 
   <p>
