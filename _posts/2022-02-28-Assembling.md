@@ -118,6 +118,8 @@ Later on, a study called <a href="#Tian2022"> "assemble them all"</a> expolits a
     <p style="text-align: center; margin-top: -10px; font-size: 12px"> source: <a href="http://asap.csail.mit.edu/">  ASAP:Automated Sequence Planning for Complex Robotic Assembly with Physical Feasibility</a></p>
 </div>
 
+and 
+
 <div style="margin-top: 20px; margin-bottom: 20px;">
     <div style="display: flex;">
         <div style="flex: 1; margin-right: 10px;">
