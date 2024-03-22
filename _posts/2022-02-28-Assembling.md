@@ -111,7 +111,7 @@ Later on, a study called <a href="#Tian2022"> "assemble them all"</a> expolits a
             <p style="text-align: center; font-size: 12px; margin-top: 5px;"> (a) Physically feasible assembly planning </p>
         </div>
         <div style="flex: 1;">
-            <img src="http://asap.csail.mit.edu/static/images/SearchTree.jpg" alt="Placeholder Image" style="width: 90%;">
+            <img src="http://asap.csail.mit.edu/static/images/SearchTree.jpg" style="width: 90%;">
             <p style="text-align: center;font-size: 12px; margin-top: 5px;"> (b) Disassembly tree </p>
         </div>
     </div>
