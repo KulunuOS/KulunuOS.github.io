@@ -34,7 +34,7 @@ For the convenience of the reader please follow the organisation and relevant qu
 |2| Assembling as a manipulation task    | - How to define robotic assembly manipulation? - How is it different/similar from assembly process planning? |
 |3| Cognition for robotic manipulation   | - How to endow cognitive capabilities for robots to perform assembling? |
 |4| State of the Art                     | - What has been studied? - What has been achieved? - Challenges? - Research gaps? - Possible contributions? |
-|5| List of references                   |  |
+|5| List of references                   |  | 
 
 ---
 ### 1. The bigger picture
