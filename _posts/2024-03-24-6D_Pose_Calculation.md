@@ -14,15 +14,15 @@ words: 4321
 ## {{ page.title }}
 
 
-## Least square fitting ( points /3D Lines and Planes)
+### Least square fitting ( points /3D Lines and Planes)
 
-## Principle component Analysis
+### Principle component Analysis
 
-## Horn's method (SVD decomposition)
+### Horn's method (SVD decomposition)
 
-## Pointcloud registration based methods
+### Pointcloud registration based methods
 
 
-## Quaternion-Based Methods (Quaternion Optimization)
+### Quaternion-Based Methods (Quaternion Optimization)
 
 
