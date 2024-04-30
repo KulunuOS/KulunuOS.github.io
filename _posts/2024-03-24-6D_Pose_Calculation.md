@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "6DoF Pose Calculation"
-abstract: "Analytical methods of calculating 6DoF pose using 3D pointclouds"
-thumbnail: '/images/6Dofpose.png'
+abstract: "Analytical (non-learning based) methods of calculating 6DoF pose using 3D pointclouds."
+thumbnail: '/images/Point_cloud_torus.gif'
 tags: [ ]
 category: <span id="hashtag">#BOP</span>  <span id="hashtag">#PVN3D</span>
 jquery: true
@@ -14,6 +14,15 @@ words: 4321
 ## {{ page.title }}
 
 
+## Least square fitting ( points /3D Lines and Planes)
 
+## Principle component Analysis
+
+## Horn's method (SVD decomposition)
+
+## Pointcloud registration based methods
+
+
+## Quaternion-Based Methods (Quaternion Optimization)
 
 
