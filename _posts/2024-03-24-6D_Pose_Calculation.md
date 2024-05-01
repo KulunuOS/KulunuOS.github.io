@@ -19,7 +19,7 @@ words: 4321
 An example of popular bunny pointcloud:
 
 <a name="bunny"></a>
-{% include /images/bunny_pcd.html %}
+{% include /figures/plotly_example.html %}
 
 Testing page
 
