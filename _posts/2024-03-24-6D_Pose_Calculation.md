@@ -21,6 +21,8 @@ An example of popular bunny pointcloud:
 <a name="bunny"></a>
 {% include /images/bunny_pcd.html %}
 
+Testing page
+
 ### Principle component Analysis
 
 ### Horn's method (SVD decomposition)
