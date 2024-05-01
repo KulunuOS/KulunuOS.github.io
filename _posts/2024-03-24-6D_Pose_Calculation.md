@@ -16,7 +16,7 @@ words: 4321
 
 ### Least square fitting ( points /3D Lines and Planes)
 
-{% include_relative images/plotly_example.html %}
+{% include_relative /images/plotly_example.html %}
 
 ### Principle component Analysis
 
