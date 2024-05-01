@@ -16,6 +16,7 @@ words: 4321
 
 ### Least square fitting ( points /3D Lines and Planes)
 
+An example of popular bunny pointcloud:
 <a name="bunny"></a>
 {% include images/plotly_example.html %}
 
