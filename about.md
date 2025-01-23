@@ -4,72 +4,121 @@ title: About
 banner: /images/tree.jpg
 ---
 
-<div style="max-width: 650px; margin: 0 auto; padding: 20px; text-align: left;">
-  <div style="width: 100%; text-align: center;">
-    <div style="width: 275px; height: 275px; overflow: hidden; border-radius: 50%; border: 5px solid #fff; margin: 0 auto;">
-      <img class="img-animate" src="/images/me.png" style="width: 100%; height: 100%;">
+<div style="max-width: 750px; margin: 0 auto; padding: 10px; text-align: left; font-family: Arial, sans-serif; line-height: 1.8;">
+  <!-- Slideshow Section -->
+<div style="max-width: 750px; margin: 0 auto; text-align: center;padding-top: 30px">
+  <div class="slideshow" style="width: 85%; height: 400px; margin: 0 auto; overflow: hidden; border-radius: 20px; position: relative;">
+    <div class="slideshow-images" style="display: flex; width: 100%; animation: slide 24s infinite;">
+      <img src="/images/me1.jpg" alt="Slide 1" style="width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; border-radius: 10px;">
+      <img src="/images/me2.jpg" alt="Slide 2" style="width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; border-radius: 10px;">
+      <img src="/images/me1.jpg" alt="Slide 3" style="width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; border-radius: 10px;">
     </div>
   </div>
-  
+</div>
+
+<style>
+  @keyframes slide {
+    0%, 20% { transform: translateX(0); }        /* Stay on the first slide */
+    25%, 45% { transform: translateX(-100%); }  /* Transition to the second slide */
+    50%, 70% { transform: translateX(-200%); }  /* Transition to the third slide */
+    75%, 100% { transform: translateX(0); }     /* Smooth return to the first slide */
+  }
+
+  /* Slideshow speed */
+  .slideshow-images {
+    animation: slide 90s infinite; /* Slower and smoother animation (24 seconds total) */
+  }
+
+  /* Smoother transitions */
+  .slideshow-images img {
+    transition: transform 7s ease-in-out;
+  }
+</style>
 
 
-  <div style="text-align:center;">
-  <h2>Kulunu Samarawickrama</h2>
-  </div>
 
-  <p align="center">
-    <a href="https://scholar.google.com/citations?user=KtoK4yAAAAAJ&hl=en&oi=ao"> <img src="https://img.shields.io/badge/-Google Scholar-c14438?style=flat-square&logo=Google-Scholar&logoColor=white&link=https://scholar.google.com/citations?user=YOUR_USER_ID_HERE" height="25" alt="Google Scholar Profile"/>
-    </a>
-    <a href="https://github.com/KulunuOS"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white&link=https://github.com/minoveaz" height="25" alt="Build status"/></a>
-    <!-- <a href="https://twitter.com/KulunuOS"><img src="https://img.shields.io/twitter/follow/KulunuOS?style=social" height="25" alt="NPM version"/></a> -->
-    <a href="https://www.linkedin.com/in/kulunuos"><img src="https://img.shields.io/badge/LinkedIn-282C34?logo=linkedin&logoColor=0077B5" height="25" alt="Build status"/></a>
-    <a href="kulunuds@gmail.com"><img src="https://img.shields.io/badge/-kulunuds@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=kulunuds@gmail.com" height="25" alt="NPM version"/></a>
+  <!-- Profile Info Section -->
+ <div style="text-align: center; margin-top: 20px; margin-bottom:0px;">
+  <h1 style="margin: 5px 0; color: #333; font-weight: bold; font-size: 1.8rem;">
+    Kulunu Samarawickrama
+  </h1>
+  <p style="margin-top: -5px; font-size: 1rem; color: #444;">
+    Doctoral Researcher, Tampere University, Finland
   </p>
-
-  <div style="text-align: justify; line-height: 1.5; margin-top: 40px">
-    <p> I am a doctoral researcher at <a href="https://research.tuni.fi/cogrob/"> 
-    Cognitive Robotics research group, Tampere University, Finland</a> working on 3D perception for robotic manipulation. 
-     
-    </p>
-    <h3> The Machatronic Engineer </h3>
-    <p> 
-      I started my career as a mechatronics graduate in 2017. I studied my bachelors at Asian Institute of technology which is one of the greenest universities in the world located at suburban Pathum Thani,  Thailand. Upon graduation, Thailand was so generous to offer me with an opportunity to work in its automation industry. At the time ( probably even today) Thailand had the luxury of immence and efficient labour workforce as the stem of their strong industrial economy. Industries were gradually adopting automation for the industrial processes. With experts I contributed in several projects automated manual production. I had fun around industrial robots, camera based inspection systems etc. The experience helped me to identify and position myself in the industry with respect to my skill, knowledge and passion.
-      Sooner I undestood the demand and hype around AI and robotics and its potential towards many industries. I was so excited to learn AI, but my job role limited my scope. One fine day, I made the decision to study further.
-    </p>
-  
-  <h3> The researcher and developer </h3> 
-
-  <p>
-    A year and half later, here I moved to Finland, where I received a scholarship to learn a masters degree in Robotics and AI from Tampere University, in the sauna capital of world. I dived deeper in to the concepts of robotics, computer vision, pattern recognition and machine learning in my studies. As always is the case, once you learn and embrace the multiverse of AI, goal should be to position yourself in a specialization. My thesis on 3D perception for robotic manipulation directed me to a new turn in career. Suprisingly, it all adds up looking back at my early career. The skills and experience I learned so far compliments and reflects on my current work. I completed my MSc and to continued to become a doctoral candidate at the tampere university. At this point, I have spent most of time as a software developer in reasearch contributing to projects funded by various organizations.
-  </p>
-
-  <h3> What is my PhD about? </h3> 
-     <p>
-       Words cant explain the amount ofanxiety I go through when someone asks me this question. I might have replied with different definitions depending on the person who asked this!
-    </p>
-    <p>
-       But seriously! I try to develop cognitive entities for robots to perform manipulation tasks such as grasping and assembling etc. The process involves several aspects in the domains of AI and robotics. Visual perception focus on tasks such as segmentation, detection, pose estimation in 3D and other point cloud processing methods. The development of perception models include dataset generation, training and deploying the models on a realtime platform. Furthermore the perception models are integrated to robotic manipulators via ROS framework. Finally, the performance of the task is measured through standards benchmarks
-    </p>
-
-  </div>
-
-  <h3>Research </h3>
-
-  <p>
-  <strong>Automatic Dataset Generation From CAD for Vision-Based Grasping</strong><br>
-  Ahmad, Samarawickrama, K., Rahtu, E., & Pieters, R. (2021).<br>
-  <em>2021 20th International Conference on Advanced Robotics (ICAR)</em>, 715–721.<br>
-  <a href="https://doi.org/10.1109/ICAR53236.2021.9659336">https://doi.org/10.1109/ICAR53236.2021.9659336</a>
-  </p>
-
-  <p>
-  <strong>Sensor-based human–robot collaboration for industrial tasks</strong><br>
-  Alexandre Angleraud, Akif Ekrekli, Kulunu Samarawickrama, Gaurang Sharma, Roel Pieters<br>
-  <em>Robotics and Computer-Integrated Manufacturing, Volume 86, 2024.</em><br>
-  <a href="https://doi.org/10.1016/j.rcim.2023.102663">https://doi.org/10.1016/j.rcim.2023.102663</a>
-  </p> 
-  
-
 </div>
 
 
+  <div style="max-width: 750px; margin: 0 auto; padding: 20px; text-align: center; font-family: Arial, sans-serif;">
+  <nav style="display: flex; justify-content: center; gap: 20px; font-size: 1rem;">
+    <a href="https://scholar.google.com/citations?user=KtoK4yAAAAAJ&hl=en&oi=ao" style="text-decoration: none; color: gray;">Google Scholar</a>
+    <a href="https://github.com/KulunuOS" style="text-decoration: none; color: gray;">GitHub</a>
+    <a href="https://www.linkedin.com/in/kulunuos" style="text-decoration: none; color: gray;">LinkedIn</a>
+    <a href="mailto:kulunuds@gmail.com" style="text-decoration: none; color: gray;">Email</a>
+  </nav>
+    </div>
+
+  <!-- Introduction -->
+  <div style="margin-bottom: 30px; text-align: justify;">
+    <h2 style="color: gray; font-size: 1.5rem;">Introduction</h2>
+    <p>
+      I am a doctoral researcher in the 
+      <a href="https://research.tuni.fi/cogrob/" style="color: gray;">
+        Cognitive Robotics Research Group
+      </a> 
+      at Tampere University, Finland. My work focuses on advancing 3D perception techniques to empower robotic systems with capabilities like grasping and assembly. I am driven by a desire to bridge the gap between cutting-edge research and its practical applications in industries. My fascination with how machines learn and adapt to their environments stems from years of academic exploration and hands-on experience.
+    </p>
+  </div>
+
+  <!-- Career Journey -->
+  <div style="margin-bottom: 30px; text-align: justify;">
+    <h2 style="color: gray; font-size: 1.5rem;">My Journey</h2>
+
+    <h3 style="font-size: 1.2rem; color: #444;">The Mechatronics Engineer</h3>
+    <p>
+      My academic journey began with a bachelor's degree in mechatronics at the Asian Institute of Technology, Thailand. During this time, I cultivated a strong foundation in mechanics, electronics, and programming. Post-graduation, I delved into the automation industry, working on challenging projects involving industrial robots and vision-based inspection systems. These experiences laid the groundwork for my growing passion for robotics and AI, inspiring me to explore further studies.
+    </p>
+
+    <h3 style="font-size: 1.2rem; color: #444;">The Researcher and Developer</h3>
+    <p>
+      My master’s journey at Tampere University allowed me to specialize in robotics and artificial intelligence. Immersed in courses like computer vision and machine learning, I honed my ability to design and implement intelligent systems. My thesis, focused on 3D perception for robotic manipulation, earned accolades for its innovation and rigor. Today, I channel this expertise into collaborative projects aimed at integrating robotics and AI into real-world applications.
+    </p>
+  </div>
+
+  <!-- Research Focus -->
+  <div style="margin-bottom: 30px; text-align: justify;">
+    <h2 style="color: gray; font-size: 1.5rem;">Research Focus</h2>
+    <p>
+      My PhD research is at the intersection of cognitive science and robotics, where I work on building models that enable robots to think and act intelligently. My focus areas include:
+    </p>
+    <ul style="list-style-type: disc; margin-left: 20px; font-size: 1rem;">
+      <li>Enhancing 3D visual perception for improved object detection and pose estimation</li>
+      <li>Developing advanced algorithms for point cloud segmentation and analysis</li>
+      <li>Creating synthetic datasets to simulate real-world scenarios for robotic training</li>
+      <li>Integrating perception models into robotic systems via ROS for seamless automation</li>
+      <li>Establishing robust benchmarks to evaluate model performance and accuracy</li>
+    </ul>
+  </div>
+
+  <!-- Publications -->
+  <div style="margin-bottom: 30px; text-align: justify;">
+    <h2 style="color: gray; font-size: 1.5rem;">Publications</h2>
+    <ul style="list-style-type: none; padding: 0; font-size: 1rem;">
+      <li style="margin-bottom: 15px;">
+        <strong>Automatic Dataset Generation From CAD for Vision-Based Grasping</strong><br>
+        Ahmad, Samarawickrama, K., Rahtu, E., & Pieters, R. (2021).<br>
+        <em>2021 20th International Conference on Advanced Robotics (ICAR)</em>, 715–721.<br>
+        <a href="https://doi.org/10.1109/ICAR53236.2021.9659336" style="color: gray;">
+          Read more
+        </a>
+      </li>
+      <li style="margin-bottom: 15px;">
+        <strong>Sensor-based human–robot collaboration for industrial tasks</strong><br>
+        Alexandre Angleraud, Akif Ekrekli, Kulunu Samarawickrama, Gaurang Sharma, Roel Pieters<br>
+        <em>Robotics and Computer-Integrated Manufacturing, Volume 86, 2024</em>.<br>
+        <a href="https://doi.org/10.1016/j.rcim.2023.102663" style="color: gray;">
+          Read more
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
