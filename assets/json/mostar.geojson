@@ -1,0 +1,27 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Stari Most Bridge",
+        "popup": "Stari Most — Historic Bridge & Jumping Spot"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [17.8135, 43.3370]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Old Town Mostar",
+        "popup": "Mostar Old Town"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [17.8141, 43.3365]
+      }
+    }
+  ]
+}
