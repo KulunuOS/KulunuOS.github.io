@@ -63,7 +63,7 @@ banner: /images/tree.jpg
     <p>
       I am a doctoral researcher in the 
       <a href="https://research.tuni.fi/cogrob/" style="color: gray;">
-        Cognitive Robotics Research Group
+        Cognitive Robotics Group
       </a> 
       at Tampere University, Finland. My work focuses on advancing 3D perception techniques to empower robotic systems with capabilities like grasping and assembly. I am driven by a desire to bridge the gap between cutting-edge research and its practical applications in industries. My fascination with how machines learn and adapt to their environments stems from years of academic exploration and hands-on experience.
     </p>
