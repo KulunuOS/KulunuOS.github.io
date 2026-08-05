@@ -18,14 +18,14 @@ ninja.data = [{
           },
         },{id: "nav-blog",
           title: "blog",
-          description: "A growing collection of notes, projects, and visual work.",
+          description: "A portfolio of research projects, software prototypes, and visual work.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/blog/";
           },
         },{id: "nav-repositories",
           title: "repositories",
-          description: "Selected repositories from the KulunuOS GitHub profile.",
+          description: "Selected GitHub repositories that showcase research software, robotics tools, and portfolio projects.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/repositories/";
@@ -44,7 +44,51 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-batch-normalization-in-neural-networks-a-comprehensive-guide",
+        },{id: "post-building-vision-language-action-policies-for-robotic-manipulation",
+        
+          title: "Building Vision-Language-Action Policies for Robotic Manipulation",
+        
+        description: "A research progression from simple 2D language-conditioned reaching policies to temporal manipulation policies.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/building-vla-policies-for-robotic-manipulation/";
+          
+        },
+      },{id: "post-generating-visual-language-robot-episodes-with-robosuite",
+        
+          title: "Generating Visual-Language Robot Episodes with Robosuite",
+        
+        description: "An ongoing project log on building a dataset-grade manipulation simulator with robosuite, MuJoCo, and a Franka-class robot arm.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/building-a-robosuite-franka-stacking-dataset/";
+          
+        },
+      },{id: "post-sequence-to-sequence-modeling-with-recurrent-neural-networks",
+        
+          title: "Sequence-to-Sequence Modeling with Recurrent Neural Networks",
+        
+        description: "An in-depth exploration of sequence-to-sequence modeling using RNNs for tasks like machine translation and text generation",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/seq2seq_rnn_article/";
+          
+        },
+      },{id: "post-multi-layer-perceptrons-foundations-of-neural-networks",
+        
+          title: "Multi-Layer Perceptrons: Foundations of Neural Networks",
+        
+        description: "A comprehensive guide to the foundations of neural networks through Multi-Layer Perceptrons",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/mlp_article/";
+          
+        },
+      },{id: "post-batch-normalization-in-neural-networks-a-comprehensive-guide",
         
           title: "Batch Normalization in Neural Networks: A Comprehensive Guide",
         

@@ -1,290 +1,199 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="http://0.0.0.0:8080/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:8080/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-04-20T14:57:13+00:00</updated><id>http://0.0.0.0:8080/feed.xml</id><title type="html">blank</title><subtitle>Personal academic website of Kulunu Samarawickrama, focused on robotics, 3D perception, and autonomous systems.
-</subtitle><entry><title type="html">Batch Normalization in Neural Networks: A Comprehensive Guide</title><link href="http://0.0.0.0:8080/blog/2026/BatchNormalization/" rel="alternate" type="text/html" title="Batch Normalization in Neural Networks: A Comprehensive Guide" /><published>2026-04-09T00:00:00+00:00</published><updated>2026-04-09T00:00:00+00:00</updated><id>http://0.0.0.0:8080/blog/2026/BatchNormalization</id><content type="html" xml:base="http://0.0.0.0:8080/blog/2026/BatchNormalization/"><![CDATA[<h2 id="contents">Contents</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://kulunuos.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://kulunuos.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-08-05T07:32:08+00:00</updated><id>https://kulunuos.github.io/feed.xml</id><title type="html">blank</title><subtitle>Research profile and GitHub project portfolio of Kulunu Samarawickrama, focused on robotics, 3D perception, and autonomous systems. </subtitle><entry><title type="html">Generating Visual-Language Robot Episodes with Robosuite</title><link href="https://kulunuos.github.io/blog/2026/building-a-robosuite-franka-stacking-dataset/" rel="alternate" type="text/html" title="Generating Visual-Language Robot Episodes with Robosuite"/><published>2026-07-31T00:00:00+00:00</published><updated>2026-07-31T00:00:00+00:00</updated><id>https://kulunuos.github.io/blog/2026/building-a-robosuite-franka-stacking-dataset</id><content type="html" xml:base="https://kulunuos.github.io/blog/2026/building-a-robosuite-franka-stacking-dataset/"><![CDATA[<blockquote> <p>Project status: ongoing. This article will be updated as the simulator, dataset format, and policy-learning workflow mature.</p> </blockquote> <h2 id="why-i-started-this-project">Why I Started This Project</h2> <p>This is an ongoing project log for my robosuite-based manipulation simulator. The goal is to build a cleaner and more reliable way to generate visual-language-action episodes for robot policy learning.</p> <p>The project uses MuJoCo for physics and robosuite for robot, controller, task, and observation handling. The first benchmark is intentionally narrow: a Franka-class robot arm stacks one block on another. Starting with a simple task makes it easier to focus on the parts that matter for policy-learning data: stable resets, clear language instructions, visual observations, action labels, success and failure labels, and reproducible episode recording.</p> <div class="article-image-grid" aria-label="A recorded robosuite episode showing the initial scene, approach, placement, and final state."> <figure> <img src="/assets/img/robosuite-franka-stack/scene-start.png" alt="Initial robosuite tabletop scene with a Franka arm and colored blocks."/> <figcaption>Initial scene</figcaption> </figure> <figure> <img src="/assets/img/robosuite-franka-stack/approach.png" alt="Franka arm approaching the red source block."/> <figcaption>Approach</figcaption> </figure> <figure> <img src="/assets/img/robosuite-franka-stack/place.png" alt="Franka arm placing the red block on the purple target block."/> <figcaption>Placement</figcaption> </figure> <figure> <img src="/assets/img/robosuite-franka-stack/final-stack.png" alt="Final robosuite scene with the red block stacked on the purple block."/> <figcaption>Final state</figcaption> </figure> </div> <h2 id="from-demo-simulation-to-dataset-grade-simulation">From Demo Simulation to Dataset-Grade Simulation</h2> <p>A visual robot demo is not the same as a useful dataset. A demo only needs to look correct once. A dataset needs to be repeatable, measurable, and honest about what happened.</p> <p>For this project, I care about recording not only images and robot actions, but also the meaning of each episode. Did the robot grasp the object? Did it place the object correctly? Did it fail, and if so, how? These labels matter because future learning models should not learn from unclear or misleading demonstrations.</p> <h2 id="why-visual-language-episodes-matter">Why Visual-Language Episodes Matter</h2> <p>The long-term goal of this project is to support robot policy learning with vision-language models and vision-language-action systems. In this setting, the robot does not learn only from numbers or isolated images. Each episode connects what the robot sees, what it is asked to do, and what action it takes over time.</p> <p>For example, an episode may include the instruction “move the red block onto the purple block,” a sequence of RGB images from the simulated camera, robot state values, object positions, gripper commands, and success labels. This combination makes the data more useful for models that need to connect language instructions with physical robot behavior.</p> <p>This is also why I am treating the simulator as a data pipeline, not just a visual demo. A robot-learning dataset should make the relationship between instruction, perception, action, and outcome easy to inspect.</p> <h2 id="why-robosuite">Why Robosuite</h2> <p>Robosuite provides a more structured starting point for manipulation research than maintaining every piece of simulation code manually. It gives access to robot models, controllers, cameras, observations, and task abstractions while still using MuJoCo as the physics engine.</p> <p>In this project, robosuite helps keep the focus on the dataset and task design instead of low-level simulator glue. The project code can then focus on the parts that are specific to my research goals: block stacking, scripted policies, success checks, episode metadata, and dataset writing.</p> <h2 id="current-task-franka-block-stacking">Current Task: Franka Block Stacking</h2> <p>The current task uses a fixed-base Franka-class arm in a tabletop scene. The robot must pick one block and place it on another block. The task is simple, but it contains the core structure of many manipulation problems: reaching, grasping, lifting, transporting, placing, and checking the final result.</p> <p>The current implementation supports scripted demonstrations, video generation, live viewing, and dataset export. There are two dataset paths: a simpler JSONL format for quick inspection, and a richer temporal episode format for later policy learning.</p> <h2 id="what-one-episode-contains">What One Episode Contains</h2> <p>The richer dataset format stores full episodes rather than isolated images. Each episode combines language, vision, state, actions, and outcome labels.</p> <table> <thead> <tr> <th>Component</th> <th>What it stores</th> <th>Why it matters</th> </tr> </thead> <tbody> <tr> <td>Instruction</td> <td>A task sentence such as “move the red block onto the purple block”</td> <td>Connects language to the robot task</td> </tr> <tr> <td>RGB frames</td> <td>Camera images over time</td> <td>Shows what the robot sees</td> </tr> <tr> <td>Robot state</td> <td>End-effector pose and gripper values</td> <td>Tracks physical motion</td> </tr> <tr> <td>Object state</td> <td>Source, target, and distractor positions</td> <td>Makes the scene auditable</td> </tr> <tr> <td>Actions</td> <td>7D motion and gripper command</td> <td>Provides policy-learning targets</td> </tr> <tr> <td>Phase labels</td> <td>Approach, grasp, place, return, and terminal phases</td> <td>Makes temporal behavior easier to analyze</td> </tr> <tr> <td>Outcomes</td> <td>Success, grasp success, place success, and failure mode</td> <td>Supports evaluation and filtering</td> </tr> </tbody> </table> <h2 id="example-episode-metadata">Example Episode Metadata</h2> <p>One useful part of the project is that each recorded episode stores a compact metadata file. For example, one successful episode records the instruction:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>move the red block onto the purple block
+</code></pre></div></div> <p>The metadata also records the task type, source and target colors, available distractor blocks, camera name, success labels, and number of steps. In this example, the episode was successful: the robot grasped the red block, placed it on the purple block, did not drop the object, and completed the task in 335 recorded steps.</p> <p>This metadata is important because the image frames alone do not explain what happened. The metadata connects the visual rollout to the task instruction, the action sequence, and the final outcome. That makes the dataset easier to inspect, debug, and use for later learning experiments.</p> <h2 id="dataset-design">Dataset Design</h2> <p>The current output structure is:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3D_PP_VLA_dataset/
+├── manifest.json
+├── splits.json
+└── episodes/
+    └── episode_000000/
+        ├── meta.json
+        ├── steps.jsonl
+        └── frames/
+</code></pre></div></div> <p>This design keeps the temporal structure of the task. A future policy can learn not only from a single image, but from how the scene changes as the robot approaches, grasps, moves, places, and returns.</p> <h2 id="relevance-to-robot-policy-learning">Relevance to Robot Policy Learning</h2> <p>Modern robot-learning work increasingly expects more than model training. The practical loop includes data collection, simulation, training, evaluation, failure analysis, and deployment-oriented thinking. This project is a small version of that loop.</p> <p>The robosuite environment gives a controlled simulator foundation. The generated episodes provide language-conditioned demonstrations. The metadata makes the data easier to filter and audit. The phase labels help diagnose where behavior breaks down. The success labels make task completion measurable.</p> <p>This kind of structure is useful for imitation learning, reinforcement learning, and VLA-style experiments because it keeps the policy target connected to the real task. The model should not only see an image or read an instruction. It should learn how observations, language, actions, and outcomes fit together across time.</p> <h2 id="current-progress">Current Progress</h2> <p>At the current stage, the project can generate temporal 3D pick-place episodes with colored blocks, distractor objects, instructions, action labels, phase labels, and success or failure outcomes. The first dataset path has already produced a 200-episode dataset for experimentation.</p> <p>The current article images are selected from one successful high-resolution preview episode generated inside the project devcontainer. They show the initial tabletop scene, the robot approaching the source block, the placement phase, and the final stacked state.</p> <h2 id="what-i-am-learning">What I Am Learning</h2> <p>The main lesson so far is that dataset generation is not just about rendering images. The difficult part is building a trustworthy connection between the task, the robot behavior, the labels, and the exported files.</p> <p>A dataset for robot learning needs clear answers to practical questions: Was the grasp valid? Was the placement stable? Did the robot fail because of control, contact, object placement, or timeout? These details are easy to ignore in a demo, but they matter when the data is used to train or evaluate a model.</p> <h2 id="next-steps">Next Steps</h2> <p>The next steps are to improve environment version pinning, strengthen success and failure checks, and connect the dataset more directly to temporal policy-learning experiments.</p> <p>I also plan to keep the article updated as the project matures, especially when the simulator becomes reliable enough for larger-scale dataset generation and model training.</p>]]></content><author><name></name></author><category term="robotics"/><category term="robotics"/><category term="robosuite"/><category term="mujoco"/><category term="dataset-generation"/><category term="manipulation"/><category term="vla"/><summary type="html"><![CDATA[An ongoing project log on building a dataset-grade manipulation simulator with robosuite, MuJoCo, and a Franka-class robot arm.]]></summary></entry><entry><title type="html">Building Vision-Language-Action Policies for Robotic Manipulation</title><link href="https://kulunuos.github.io/blog/2026/building-vla-policies-for-robotic-manipulation/" rel="alternate" type="text/html" title="Building Vision-Language-Action Policies for Robotic Manipulation"/><published>2026-07-31T00:00:00+00:00</published><updated>2026-07-31T00:00:00+00:00</updated><id>https://kulunuos.github.io/blog/2026/building-vla-policies-for-robotic-manipulation</id><content type="html" xml:base="https://kulunuos.github.io/blog/2026/building-vla-policies-for-robotic-manipulation/"><![CDATA[<blockquote> <p>Project status: ongoing. This article documents a controlled research progression for learning robotic manipulation policies from vision, language, and action data.</p> </blockquote> <h2 id="why-vision-language-action-models-matter">Why Vision-Language-Action Models Matter</h2> <p>A robot policy should not only see the world. It should also understand what task it is being asked to do, and then choose actions that move the task forward.</p> <p>This project studies that idea in a small controlled manipulation setting. The environment is intentionally simple: a 2D workspace, colored objects, a gripper, and language instructions such as <code class="language-plaintext highlighter-rouge">reach the red object</code>. The simplicity is useful because it makes every failure visible. If the model moves toward the wrong object, ignores language, or cannot recover from a bad position, the problem can be inspected directly.</p> <h2 id="custom-dataset-and-task">Custom Dataset and Task</h2> <p>I built the dataset as a synthetic 2D manipulation benchmark. Each scene contains a small set of colored objects placed at random positions on a square workspace. A gripper is also placed in the workspace, and one object color is selected as the target for that sample.</p> <p>The language instruction describes the task in a short sentence, for example <code class="language-plaintext highlighter-rouge">reach the red object</code>. The image shows the full scene, the state records the current gripper position, and the training label comes from a simple expert controller that points from the gripper toward the instructed target.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">instruction</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">"</span><span class="s">reach the </span><span class="si">{</span><span class="n">target_color</span><span class="si">}</span><span class="s"> object</span><span class="sh">"</span>
+<span class="n">image</span> <span class="o">=</span> <span class="nf">render_scene</span><span class="p">(</span><span class="n">object_map</span><span class="p">,</span> <span class="n">gripper_xy</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="n">image_size</span><span class="p">)</span>
+<span class="n">target_xy</span> <span class="o">=</span> <span class="n">object_map</span><span class="p">[</span><span class="n">target_color</span><span class="p">]</span>
+<span class="n">action</span> <span class="o">=</span> <span class="nf">oracle_action</span><span class="p">(</span><span class="n">gripper_xy</span><span class="p">,</span> <span class="n">target_xy</span><span class="p">,</span> <span class="n">max_step</span><span class="o">=</span><span class="n">max_step</span><span class="p">)</span>
+</code></pre></div></div> <p>This gives each sample four connected parts: what the robot sees, what it is told to do, where it currently is, and what action would move it closer to completing the task. The benchmark is small, but it captures the core structure of visual-language-action learning for manipulation.</p> <figure class="article-wide-figure article-dataset-samples"> <img src="/assets/img/vla-manipulation/dataset-sample-grid.png" alt="Four synthetic 2D VLA dataset samples showing colored objects, gripper states, target rings, and expert action arrows."/> <figcaption>Example dataset samples. The black ring marks the instructed target object, and the blue arrow shows the expert action direction from the current gripper position.</figcaption> </figure> <p>The project progresses through several methods. Each method changes one important part of the model or dataset while keeping the task understandable.</p> <h2 id="direct-action-regression">Direct Action Regression</h2> <p>Direct action regression is the simplest possible VLA policy. The model receives an image, a language instruction, and the gripper state. It directly predicts the next action.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">instruction</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">"</span><span class="s">reach the </span><span class="si">{</span><span class="n">target_color</span><span class="si">}</span><span class="s"> object</span><span class="sh">"</span>
+<span class="n">image</span> <span class="o">=</span> <span class="nf">render_scene</span><span class="p">(</span><span class="n">object_map</span><span class="p">,</span> <span class="n">gripper_xy</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="n">image_size</span><span class="p">)</span>
+<span class="n">action</span> <span class="o">=</span> <span class="nf">oracle_action</span><span class="p">(</span><span class="n">gripper_xy</span><span class="p">,</span> <span class="n">target_xy</span><span class="p">,</span> <span class="n">max_step</span><span class="o">=</span><span class="n">max_step</span><span class="p">)</span>
+</code></pre></div></div> <p>This method proves the basic pipeline: generate synthetic scenes, tokenize language, render images, train a CNN policy, and evaluate it in closed loop.</p> <p>The limitation is that direct action regression asks the model to solve too many things at once. It must identify the correct object, estimate its position, compare it with the gripper state, and output the correct movement. The final validation action error was around <code class="language-plaintext highlighter-rouge">0.053</code>, but closed-loop tests still failed. This showed that a low supervised loss is not enough for reliable policy behavior.</p> <figure class="article-gif-figure"> <img src="/assets/img/vla-manipulation/direct-action-demo.gif" alt="Direct action regression demo for a 2D language-conditioned reaching task."/> <figcaption>Direct action regression demo: the policy receives image, language, and state, then predicts a movement command directly.</figcaption> </figure> <h2 id="target-first-learning">Target-First Learning</h2> <p>Target-first learning changes the prediction target. Instead of predicting the action directly, the model predicts where the instructed object is. The action is then computed analytically from the predicted target and the current gripper state.</p> <p>This makes the problem easier to understand. The network is responsible for perception and grounding: where is the red object? The controller is responsible for movement: move from here toward that point.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">target_heatmap</span> <span class="o">=</span> <span class="nf">make_target_heatmap</span><span class="p">(</span><span class="n">target_xy</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">heatmap_size</span><span class="p">)</span>
+<span class="n">pred_target</span> <span class="o">=</span> <span class="nf">soft_argmax</span><span class="p">(</span><span class="n">predicted_heatmap</span><span class="p">)</span>
+<span class="n">action</span> <span class="o">=</span> <span class="nf">controller</span><span class="p">(</span><span class="n">pred_target</span> <span class="o">-</span> <span class="n">state</span><span class="p">)</span>
+</code></pre></div></div> <p>This method also adds coordinate channels and noisy off-policy gripper states. These help the model reason about geometry and recovery situations. Validation action error improved to about <code class="language-plaintext highlighter-rouge">0.0278</code>, and the target error became measurable directly.</p> <figure class="article-gif-figure"> <img src="/assets/img/vla-manipulation/target-first-demo.gif" alt="Target-first demo with a predicted target marker and analytic action arrow."/> <figcaption>Target-first demo: the policy predicts the instructed target location first, then a transparent controller computes the motion.</figcaption> </figure> <h2 id="film-conditioning">FiLM Conditioning</h2> <p>FiLM conditioning keeps the target-first objective but changes how language enters the visual model. Instead of using language only near the end, it uses language-conditioned modulation inside the CNN.</p> <p>FiLM means the language instruction produces scale and bias values that modulate visual feature maps. In simple terms, the phrase <code class="language-plaintext highlighter-rouge">red object</code> changes how the visual network processes the scene.</p> <p>This is useful because language should shape perception early, not only after the image has already been compressed. The experiment tests whether stronger language-conditioned visual features improve object grounding.</p> <figure class="article-gif-figure"> <img src="/assets/img/vla-manipulation/film-conditioning-demo.gif" alt="FiLM-conditioned CNN demo for a 2D reaching instruction."/> <figcaption>FiLM-conditioned demo: language conditions the CNN feature maps before the target heatmap is produced.</figcaption> </figure> <h2 id="cross-attention-fusion">Cross-Attention Fusion</h2> <p>Cross-attention fusion replaces FiLM with a small cross-attention mechanism. The CNN produces spatial visual tokens, and the language embedding attends over those tokens.</p> <p>The motivation is different from FiLM conditioning. FiLM modulates channels globally. Cross-attention gives the instruction a more direct way to select spatial evidence. For example, the language token for <code class="language-plaintext highlighter-rouge">red</code> should attend more strongly to the region containing the red object.</p> <p>The rest of the pipeline remains fixed: target heatmap prediction, soft argmax, and analytic control. This makes the comparison cleaner because the main change is the multimodal fusion mechanism.</p> <figure class="article-gif-figure"> <img src="/assets/img/vla-manipulation/cross-attention-demo.gif" alt="Cross-attention demo for a language-conditioned reaching policy."/> <figcaption>Cross-attention demo: language attends over spatial visual evidence before the policy chooses the target.</figcaption> </figure> <h2 id="token-transformer-fusion">Token Transformer Fusion</h2> <p>Token transformer fusion moves closer to modern VLA design. The visual feature map is converted into tokens, the instruction becomes a text token, and a small transformer mixes them together.</p> <p>This allows repeated interaction between visual and language information. Instead of one attention step, the model can refine the relationship between task words and object locations across multiple transformer layers.</p> <p>This method produced the strongest saved report among the early exported results. Validation action error reached about <code class="language-plaintext highlighter-rouge">0.0197</code>, and validation target error reached about <code class="language-plaintext highlighter-rouge">0.095</code>. However, closed-loop success was still limited: around <code class="language-plaintext highlighter-rouge">6.7%</code> overall in the capability test, with harder starts failing more often.</p> <p>That result is important. It shows that better prediction metrics do not automatically create robust robot behavior. Closed-loop evaluation is necessary.</p> <figure class="article-gif-figure"> <img src="/assets/img/vla-manipulation/token-transformer-demo.gif" alt="Token transformer demo for a 2D VLA reaching policy."/> <figcaption>Token transformer demo: visual tokens and a language token are refined together before target prediction.</figcaption> </figure> <h2 id="patch-token-policy">Patch-Token Policy</h2> <p>Patch-token policy explores a token-native visual encoder. It removes the CNN feature hierarchy and patchifies the image directly. Each image patch becomes a token. Language and state are also represented as tokens, and a transformer mixes everything together.</p> <p>This method asks a clean architectural question: can a token-native visual policy solve the same grounding task without relying on CNN features?</p> <p>I have kept this section without a result GIF for now because an execution demo has not been added to the site assets yet. The comparison remains clear: keep the same target-first supervision and analytic controller, then isolate the effect of the visual representation.</p> <h2 id="temporal-manipulation-policy">Temporal Manipulation Policy</h2> <p>Temporal manipulation moves from reactive reaching to sequential manipulation. The instruction becomes more complex: <code class="language-plaintext highlighter-rouge">pick the source object and place it on the target object</code>.</p> <p>The dataset stores short episodes instead of isolated frames. Each training sample contains recent images, robot states, previous actions, one language instruction, and a chunk of future actions.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">"</span><span class="s">images</span><span class="sh">"</span><span class="p">:</span> <span class="n">history_images</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">states</span><span class="sh">"</span><span class="p">:</span> <span class="n">history_states</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">prev_actions</span><span class="sh">"</span><span class="p">:</span> <span class="n">previous_actions</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">instruction</span><span class="sh">"</span><span class="p">:</span> <span class="n">instruction</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">target_actions</span><span class="sh">"</span><span class="p">:</span> <span class="n">future_action_chunk</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div> <p>This is the most important conceptual shift in the project. Real manipulation is not a single-frame problem. The correct action depends on what happened before: whether the gripper approached the object, whether it picked it up, and whether it is now moving toward the target.</p> <p>This section also stays without a result GIF for now because an execution demo has not been added to the site assets yet. Conceptually, temporal manipulation is the bridge from simple VLA grounding toward sequence-aware robot policy learning.</p> <h2 id="discussion-what-changed-across-the-methods">Discussion: What Changed Across the Methods</h2> <p>The method progression is useful because each step isolates a different part of the VLA problem.</p> <p>Direct action regression treats manipulation as direct action prediction. This is the simplest formulation, but it hides too much inside one prediction head. The model must understand the image, ground the language, reason about geometry, and output the correct action all at once. The result is a useful baseline, but it is difficult to interpret when it fails.</p> <p>Target-first learning makes the problem more structured by separating target localization from control. This is a major improvement in clarity. If the policy fails, I can inspect whether the target estimate is wrong or whether the controller is behaving poorly. This method also shows why intermediate representations matter in robotics: predicting a target heatmap is more interpretable than predicting an action vector directly.</p> <p>FiLM conditioning and cross-attention fusion focus on how language interacts with vision. FiLM lets the instruction shape visual feature extraction through channel-wise modulation. Cross-attention makes the interaction more spatial by letting language attend over visual regions. Both methods are attempts to answer the same question: how should the phrase <code class="language-plaintext highlighter-rouge">red object</code> influence what the model sees?</p> <p>Token transformer fusion moves toward a more modern multimodal structure by mixing visual tokens and a language token inside a transformer. This gives the model more opportunities to refine the relationship between instruction and scene. It also produced the best saved supervised metrics among the exported runs. However, the low closed-loop success rate shows that better one-step prediction does not automatically produce reliable behavior over time.</p> <p>Patch-token policy and temporal manipulation point toward the next research direction. Patch-token policy changes the visual representation by using image patches directly. Temporal manipulation changes the task structure by moving from single-step reaching to action history and task progress. Together, they mark the shift from small visual grounding experiments toward policies that must reason over time.</p> <p>Overall, the strongest improvement is not one specific architecture. It is the gradual separation of the problem into parts that can be measured: grounding, localization, action generation, closed-loop recovery, and temporal behavior.</p> <h2 id="conclusion">Conclusion</h2> <p>This project helped me build a practical understanding of Vision-Language-Action policy learning for manipulation. Starting with a small 2D environment made the research process easier to control. I could change one idea at a time, inspect failures visually, and compare models without the complexity of a full robot simulator.</p> <p>The main lesson is that robotic policy learning needs more than a model that performs well on a supervised validation set. A useful policy must work in closed loop, recover from imperfect states, and keep the language instruction connected to the action sequence. The exported results show this clearly: prediction errors improved, but task success remained a harder problem.</p> <p>This makes the later temporal direction especially important. Manipulation is not only about choosing the next action from the current image. It is about understanding task progress over time. A policy needs to know whether it is approaching, grasping, moving, placing, or recovering from a mistake.</p> <p>The value of this project is that it creates a clear research foundation. It starts from simple language-conditioned reaching, adds better visual grounding, tests different multimodal fusion methods, and then moves toward temporal manipulation policies. That progression gives me a structured way to study VLA models before scaling to larger datasets and more realistic robotic tasks.</p>]]></content><author><name></name></author><category term="robotics"/><category term="robotics"/><category term="vla"/><category term="vision-language-action"/><category term="manipulation"/><category term="policy-learning"/><summary type="html"><![CDATA[A research progression from simple 2D language-conditioned reaching policies to temporal manipulation policies.]]></summary></entry><entry><title type="html">Multi-Layer Perceptrons: Foundations of Neural Networks</title><link href="https://kulunuos.github.io/blog/2026/mlp_article/" rel="alternate" type="text/html" title="Multi-Layer Perceptrons: Foundations of Neural Networks"/><published>2026-04-20T00:00:00+00:00</published><updated>2026-04-20T00:00:00+00:00</updated><id>https://kulunuos.github.io/blog/2026/mlp_article</id><content type="html" xml:base="https://kulunuos.github.io/blog/2026/mlp_article/"><![CDATA[<h2 id="introduction">Introduction</h2> <p>Multi-Layer Perceptrons (MLPs) are the cornerstone of modern deep learning, serving as the building blocks for more complex neural network architectures. An MLP is a type of feedforward neural network consisting of multiple layers of interconnected nodes or neurons. These networks excel at learning complex patterns in data through supervised learning, making them invaluable for tasks like classification, regression, and feature learning.</p> <p>In this article, we’ll delve into the fundamentals of MLPs, exploring their architecture, training mechanisms, and practical applications. We’ll include conceptual explanations, illustrative code snippets, and placeholders for diagrams to provide a comprehensive understanding.</p> <h2 id="understanding-feedforward-neural-networks">Understanding Feedforward Neural Networks</h2> <p>Feedforward neural networks, including MLPs, process information in one direction: from input to output, without cycles or loops. Each neuron in the network receives inputs, applies a weighted sum, and passes the result through an activation function to produce an output.</p> <p>The basic computation in a neuron can be expressed as:</p> <p>[ y = f\left(\sum_{i=1}^{n} w_i x_i + b\right) ]</p> <p>Where:</p> <ul> <li>( y ) is the output of the neuron</li> <li>( x_i ) are the inputs</li> <li>( w_i ) are the weights</li> <li>( b ) is the bias term</li> <li>( f ) is the activation function</li> </ul> <p>MLPs extend this concept by stacking multiple layers, allowing them to learn hierarchical representations of data.</p> <h2 id="the-mlp-architecture">The MLP Architecture</h2> <p>An MLP consists of three main types of layers: input, hidden, and output layers.</p> <h3 id="input-layer">Input Layer</h3> <p>The input layer receives the raw data and passes it to the first hidden layer without any transformation. The number of neurons in the input layer typically matches the dimensionality of the input data.</p> <h3 id="hidden-layers">Hidden Layers</h3> <p>Hidden layers perform the bulk of the computation. Each neuron in a hidden layer connects to every neuron in the previous layer, forming a fully connected or dense layer. MLPs can have multiple hidden layers, which is what gives them their “deep” learning capability.</p> <h3 id="output-layer">Output Layer</h3> <p>The output layer produces the final predictions. For classification tasks, it often uses a softmax activation to produce probability distributions over classes. For regression, it might use a linear activation.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
 
-<ol>
-  <li><a href="#1-intuition-behind-batch-normalization">1. Intuition Behind Batch Normalization</a></li>
-  <li><a href="#2-core-logic">2. Core Logic</a></li>
-  <li><a href="#3-running-statistics">3. Running Statistics</a></li>
-  <li><a href="#4-dynamic-momentum-vs-static-momentum">4. Dynamic Momentum vs Static Momentum</a></li>
-  <li><a href="#5-batch-normalization-in-multigpu-training">5. Batch Normalization in MultiGPU Training</a></li>
-  <li><a href="#6-multi-gpu-running-stats-advanced">6. Multi GPU Running Stats (ADVANCED)</a></li>
-</ol>
+<span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_sizes</span><span class="p">,</span> <span class="n">output_size</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">MLP</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">layers</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">ModuleList</span><span class="p">()</span>
+        
+        <span class="c1"># Input to first hidden layer
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        
+        <span class="c1"># Hidden layers
+</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">hidden_sizes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">hidden_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">hidden_sizes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span>
+        
+        <span class="c1"># Last hidden to output
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">hidden_sizes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">output_size</span><span class="p">))</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">()</span>
 
-<h2 id="1-intuition-behind-batch-normalization">1. Intuition Behind Batch Normalization</h2>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">layers</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">activation</span><span class="p">(</span><span class="nf">layer</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># No activation on output
+</span>        <span class="k">return</span> <span class="n">x</span>
+</code></pre></div></div> <p>[Placeholder for MLP Architecture Diagram: A layered diagram showing input, hidden, and output layers with connections]</p> <h2 id="activation-functions">Activation Functions</h2> <p>Activation functions introduce non-linearity into the network, allowing MLPs to learn complex, non-linear relationships.</p> <h3 id="common-activation-functions">Common Activation Functions</h3> <ul> <li><strong>ReLU (Rectified Linear Unit)</strong>: ( f(x) = \max(0, x) ) <ul> <li>Advantages: Computationally efficient, helps with vanishing gradient problem</li> <li>Disadvantages: Can suffer from “dying ReLU” problem</li> </ul> </li> <li><strong>Sigmoid</strong>: ( f(x) = \frac{1}{1 + e^{-x}} ) <ul> <li>Outputs values between 0 and 1</li> <li>Often used in binary classification output layers</li> </ul> </li> <li><strong>Tanh</strong>: ( f(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} ) <ul> <li>Outputs values between -1 and 1</li> <li>Zero-centered, which can help with optimization</li> </ul> </li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Example of different activation functions
+</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">()</span>
+<span class="n">sigmoid</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sigmoid</span><span class="p">()</span>
+<span class="n">tanh</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Tanh</span><span class="p">()</span>
 
-<p>Imagine you’re training a machine learning model (like a neural network) to classify images. Each layer of the model learns patterns from the data, but sometimes, these patterns get misaligned due to large variations in the input data or intermediate outputs (activations). This can slow down training and make optimization difficult.</p>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">ReLU:</span><span class="sh">"</span><span class="p">,</span> <span class="nf">relu</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Sigmoid:</span><span class="sh">"</span><span class="p">,</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Tanh:</span><span class="sh">"</span><span class="p">,</span> <span class="nf">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</code></pre></div></div> <p>[Placeholder for Activation Functions Diagram: Plots showing the shapes of ReLU, sigmoid, and tanh functions]</p> <h2 id="training-with-backpropagation">Training with Backpropagation</h2> <p>MLPs are trained using backpropagation, a gradient descent algorithm that adjusts the network’s weights to minimize a loss function.</p> <h3 id="loss-functions">Loss Functions</h3> <ul> <li> <p><strong>Mean Squared Error (MSE)</strong>: For regression tasks [ \mathcal{L} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 ]</p> </li> <li> <p><strong>Cross-Entropy Loss</strong>: For classification tasks [ \mathcal{L} = -\sum_{i=1}^{C} y_i \log(\hat{y}_i) ]</p> </li> </ul> <h3 id="gradient-descent-variants">Gradient Descent Variants</h3> <ul> <li><strong>Stochastic Gradient Descent (SGD)</strong>: Updates weights using a single sample</li> <li><strong>Mini-batch Gradient Descent</strong>: Updates using small batches of samples</li> <li><strong>Adam</strong>: Adaptive learning rate optimization</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Example training loop
+</span><span class="k">def</span> <span class="nf">train_mlp</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">):</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+            <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+            <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+            <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">, Loss: </span><span class="si">{</span><span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="optimization-and-regularization">Optimization and Regularization</h2> <h3 id="regularization-techniques">Regularization Techniques</h3> <p>To prevent overfitting, several regularization methods are commonly used:</p> <ul> <li><strong>L2 Regularization (Weight Decay)</strong>: Adds a penalty term to the loss function</li> <li><strong>Dropout</strong>: Randomly deactivates neurons during training</li> <li><strong>Early Stopping</strong>: Stops training when validation loss stops improving</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># MLP with dropout
+</span><span class="k">class</span> <span class="nc">MLPWithDropout</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_sizes</span><span class="p">,</span> <span class="n">output_size</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">MLPWithDropout</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">layers</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">ModuleList</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">dropouts</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">ModuleList</span><span class="p">()</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">dropouts</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">dropout_rate</span><span class="p">))</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">hidden_sizes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">hidden_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">hidden_sizes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">dropouts</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">dropout_rate</span><span class="p">))</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">hidden_sizes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">output_size</span><span class="p">))</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">()</span>
 
-<p>Batch Normalization (BN) is like a “balancing act” that ensures the activations (outputs of neurons) at each layer remain well-scaled and centered. It stabilizes the learning process and helps the network converge faster.</p>
-
-<p>Think of it as making sure the data flowing through your network behaves consistently, like keeping traffic on a highway moving smoothly without bottlenecks.</p>
-
-<p><strong>Why is Batch Normalization Useful?</strong></p>
-
-<ul>
-  <li><strong>Stabilizes Training</strong>: Keeps activations well-scaled, avoiding extreme values that can destabilize training.</li>
-  <li><strong>Speeds Up Convergence</strong>: Reduces the need for careful initialization and aggressive learning rate tuning.</li>
-  <li><strong>Regularization Effect</strong>: Acts as a mild form of regularization by adding noise to activations, reducing over fitting.</li>
-  <li>Accurate running statistics help the model generalize to unseen data during inference, ensuring consistent prediction.</li>
-</ul>
-
-<h2 id="2-core-logic">2. Core Logic</h2>
-
-<p>At its core, Batch Normalization normalizes the activations of a layer for each mini-batch during training.</p>
-
-<h3 id="21-training-phase">2.1 Training Phase</h3>
-
-<ol>
-  <li>
-    <p><strong>Calculate the Mean and Variance</strong></p>
-
-    <p>For each feature in the mini-batch, compute the mean (𝜇) and variance (𝜎²).</p>
-  </li>
-  <li>
-    <p><strong>Normalize the Activations</strong></p>
-
-    <p>Center and scale the activations so they have zero mean and unit variance:</p>
-
-\[\hat{x} = \frac{x - \mu}{\sqrt{\sigma^2 + \epsilon}}\]
-
-    <p>Here, 𝜖 is a small constant added for numerical stability (to avoid division by zero).</p>
-  </li>
-  <li>
-    <p><strong>Learnable Scaling and Shifting</strong></p>
-
-    <p>Instead of just normalizing, Batch Normalization introduces learnable parameters 𝛾 (scale) and 𝛽 (shift), allowing the model to adjust the normalized values:</p>
-
-\[y = \gamma \hat{x} + \beta\]
-  </li>
-</ol>
-
-<ul>
-  <li>learnable parameters 𝛾 (scale) and 𝛽 (shift) are learned separately for each BN layer.</li>
-  <li>learnable parameters 𝛾 (scale) and 𝛽 (shift) are shared across all mini-batches (whole batch) per BN layer in the network.</li>
-  <li>learnable parameters 𝛾 (scale) and 𝛽 (shift) are learned/updated during back propagation.</li>
-</ul>
-
-<ol>
-  <li>
-    <p><strong>Important to Note</strong></p>
-
-    <p>If you have a neural network with 3 Batch Normalization layers, and each layer has $k$ output features, then:</p>
-
-    <ol>
-      <li>Each layer has its own set of $\gamma$ and $\beta$ parameters, with $k$ parameters for each.</li>
-      <li>These parameters are learned globally for the layer and remain fixed after training.</li>
-    </ol>
-
-    <p>For example:</p>
-
-    <ul>
-      <li><strong>Layer 1</strong> (output dimension $k_1$):
-\(\gamma_1 \in \mathbb{R}^{k_1}, \quad \beta_1 \in \mathbb{R}^{k_1}\)</li>
-      <li><strong>Layer 2</strong> (output dimension $k_2$):
-\(\gamma_2 \in \mathbb{R}^{k_2}, \quad \beta_2 \in \mathbb{R}^{k_2}\)</li>
-    </ul>
-  </li>
-</ol>
-
-<h3 id="batch-normalization-example">Batch Normalization Example</h3>
-
-<p>Imagine a single layer of a neural network that outputs:</p>
-
-\[x = [2.0, 4.0, 6.0, 8.0]\]
-
-<p>The mean ($\mu$) is calculated as:</p>
-
-\[\mu = \frac{2.0 + 4.0 + 6.0 + 8.0}{4} = 5.0\]
-
-<p>The variance ($\sigma^2$) is calculated as:</p>
-
-\[\sigma^2 = \frac{(2 - 5)^2 + (4 - 5)^2 + (6 - 5)^2 + (8 - 5)^2}{4} = 5.0\]
-
-<h4 id="step-2-normalize">Step 2: Normalize</h4>
-
-<p>For each $x_i$, calculate the normalized value:</p>
-
-\[\hat{x}_i = \frac{x_i - \mu}{\sqrt{\sigma^2 + \epsilon}}\]
-
-<p>Using $\epsilon = 1e^{-5}$ for numerical stability:</p>
-
-\[\hat{x} = \left[ \frac{2 - 5}{\sqrt{5 + 1e^{-5}}}, \frac{4 - 5}{\sqrt{5 + 1e^{-5}}}, \frac{6 - 5}{\sqrt{5 + 1e^{-5}}}, \frac{8 - 5}{\sqrt{5 + 1e^{-5}}} \right]\]
-
-<p>Simplifying:</p>
-
-\[\hat{x} = [-1.34, -0.45, 0.45, 1.34]\]
-
-<h4 id="step-3-scale-and-shift">Step 3: Scale and Shift</h4>
-
-<p>Assume $\gamma = 2.0$ (scale) and $\beta = 1.0$ (shift). Then:</p>
-
-\[y_i = \gamma \hat{x}_i + \beta\]
-
-<p>Substitute the values:</p>
-
-\[y = [2(-1.34) + 1, 2(-0.45) + 1, 2(0.45) + 1, 2(1.34) + 1]\]
-
-<p>Simplifying:</p>
-
-\[y = [-1.68, 0.1, 1.9, 3.68]\]
-
-<figure>
-  <picture>
-    <!-- Auto scaling with imagemagick -->
-    <!--
-      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
-      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
-    -->
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">layer</span><span class="p">,</span> <span class="n">dropout</span> <span class="ow">in</span> <span class="nf">zip</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">layers</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">self</span><span class="p">.</span><span class="n">dropouts</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="nf">dropout</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nf">activation</span><span class="p">(</span><span class="nf">layer</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+</code></pre></div></div> <p>[Placeholder for Training Process Diagram: A flowchart showing forward pass, loss computation, backpropagation, and weight updates]</p> <h2 id="inference-and-evaluation">Inference and Evaluation</h2> <p>During inference, the trained MLP processes new data to make predictions. For classification tasks, we often apply softmax to get probabilities and select the class with the highest probability.</p> <h3 id="evaluation-metrics">Evaluation Metrics</h3> <ul> <li><strong>Accuracy</strong>: For classification</li> <li><strong>Precision, Recall, F1-Score</strong>: For imbalanced classification</li> <li><strong>Mean Absolute Error (MAE)</strong>: For regression</li> <li><strong>Root Mean Squared Error (RMSE)</strong>: For regression</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">evaluate_mlp</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">):</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+    <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="n">outputs</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">targets</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">correct</span> <span class="o">+=</span> <span class="p">(</span><span class="n">predicted</span> <span class="o">==</span> <span class="n">targets</span><span class="p">).</span><span class="nf">sum</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
     
-      
-        <source class="responsive-img-srcset" srcset="/assets/img/batch-normalization-example-480.webp 480w,/assets/img/batch-normalization-example-800.webp 800w,/assets/img/batch-normalization-example-1400.webp 1400w," type="image/webp" sizes="95vw" />
-      
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">total</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">%</span><span class="sh">'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">accuracy</span>
+</code></pre></div></div> <h2 id="advanced-techniques-and-considerations">Advanced Techniques and Considerations</h2> <h3 id="batch-normalization">Batch Normalization</h3> <p>Batch normalization normalizes the inputs to each layer, helping with training stability and potentially allowing higher learning rates.</p> <h3 id="xavierglorot-initialization">Xavier/Glorot Initialization</h3> <p>Proper weight initialization can significantly impact training convergence. Xavier initialization sets weights based on the number of input and output neurons.</p> <h3 id="learning-rate-scheduling">Learning Rate Scheduling</h3> <p>Adjusting the learning rate during training (e.g., reducing it over time) can lead to better convergence.</p> <h2 id="challenges-and-future-directions">Challenges and Future Directions</h2> <p>While MLPs are powerful, they have limitations:</p> <ul> <li>They can be prone to overfitting on small datasets</li> <li>They don’t inherently handle sequential data well (unlike RNNs)</li> <li>They can be computationally expensive for very large networks</li> </ul> <p>Modern architectures like Convolutional Neural Networks (CNNs) and Transformers have extended the capabilities of MLPs for specific tasks. However, understanding MLPs remains crucial as they form the basis for many advanced models.</p> <h2 id="conclusion">Conclusion</h2> <p>Multi-Layer Perceptrons represent the foundation of deep learning, demonstrating how simple neuron-like units can be combined to learn complex patterns. By understanding their architecture, training process, and optimization techniques, we gain insights into the workings of more advanced neural network models. As the field continues to evolve, the principles learned from MLPs continue to inform the development of cutting-edge AI systems.</p> <p>[Placeholder for Complete MLP Diagram: A comprehensive diagram showing data flow through an MLP with multiple layers]</p>]]></content><author><name>Kulunu Samarawickrama</name></author><summary type="html"><![CDATA[A comprehensive guide to the foundations of neural networks through Multi-Layer Perceptrons]]></summary></entry><entry><title type="html">Sequence-to-Sequence Modeling with Recurrent Neural Networks</title><link href="https://kulunuos.github.io/blog/2026/seq2seq_rnn_article/" rel="alternate" type="text/html" title="Sequence-to-Sequence Modeling with Recurrent Neural Networks"/><published>2026-04-20T00:00:00+00:00</published><updated>2026-04-20T00:00:00+00:00</updated><id>https://kulunuos.github.io/blog/2026/seq2seq_rnn_article</id><content type="html" xml:base="https://kulunuos.github.io/blog/2026/seq2seq_rnn_article/"><![CDATA[<h2 id="introduction">Introduction</h2> <p>Sequence-to-sequence (seq2seq) modeling is a powerful framework in deep learning used for tasks where the input and output are both sequences of variable lengths. This approach is particularly effective for applications like machine translation, text summarization, and conversational AI. At the heart of many seq2seq models are Recurrent Neural Networks (RNNs), which excel at processing sequential data due to their ability to maintain internal state over time.</p> <p>In this article, we’ll explore the fundamentals of seq2seq modeling using RNNs, breaking down the key components, training strategies, and evaluation methods. We’ll include conceptual explanations, illustrative code snippets, and placeholders for diagrams to enhance understanding.</p> <h2 id="understanding-recurrent-neural-networks-in-sequence-processing">Understanding Recurrent Neural Networks in Sequence Processing</h2> <p>RNNs are neural networks designed to handle sequential data by maintaining a hidden state that captures information from previous time steps. Unlike feedforward networks, RNNs can theoretically process sequences of any length, making them ideal for natural language processing tasks.</p> <p>The basic RNN update can be expressed as:</p> \[h_t = \tanh(W_{xh} x_t + W_{hh} h_{t-1} + b)\] <p>Where:</p> <ul> <li>$ h_t $ is the hidden state at time t</li> <li>$ x_t $ is the input at time t</li> <li>$ W_{xh} $ and $ W_{hh} $ are weight matrices</li> <li>$ b $ is the bias term</li> </ul> <p>However, standard RNNs suffer from vanishing gradients, which limits their ability to capture long-range dependencies. Variants like Long Short-Term Memory (LSTM) and Gated Recurrent Units (GRU) address this issue with gating mechanisms.</p> <h2 id="the-sequence-to-sequence-architecture">The Sequence-to-Sequence Architecture</h2> <p>A typical seq2seq model consists of two main components: an encoder and a decoder, both implemented using RNNs.</p> <h3 id="the-encoder">The Encoder</h3> <p>The encoder processes the input sequence and compresses it into a fixed-size context vector (or set of vectors). This vector encapsulates the essential information from the entire input sequence.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+
+<span class="k">class</span> <span class="nc">Encoder</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">Encoder</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Embedding</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">rnn</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">GRU</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_seq</span><span class="p">):</span>
+        <span class="n">embedded</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">embedding</span><span class="p">(</span><span class="n">input_seq</span><span class="p">)</span>
+        <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">rnn</span><span class="p">(</span><span class="n">embedded</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span>
+</code></pre></div></div> <p>[Placeholder for Encoder Diagram: A flowchart showing input sequence flowing through embedding layer to RNN, producing context vector]</p> <h3 id="the-decoder">The Decoder</h3> <p>The decoder takes the context vector from the encoder and generates the output sequence, one element at a time. It uses the previous output as input for the next time step.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Decoder</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">output_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">Decoder</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Embedding</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">rnn</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">GRU</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">output_size</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">softmax</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">LogSoftmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_token</span><span class="p">,</span> <span class="n">hidden</span><span class="p">):</span>
+        <span class="n">embedded</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">embedding</span><span class="p">(</span><span class="n">input_token</span><span class="p">).</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">rnn</span><span class="p">(</span><span class="n">embedded</span><span class="p">,</span> <span class="n">hidden</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span><span class="n">output</span><span class="p">.</span><span class="nf">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span>
+</code></pre></div></div> <p>[Placeholder for Decoder Diagram: A flowchart showing context vector initialization, then iterative generation of output tokens]</p> <h2 id="training-strategies">Training Strategies</h2> <h3 id="teacher-forcing">Teacher Forcing</h3> <p>During training, we have access to the ground truth output sequence. Teacher forcing is a technique where we use the correct previous token as input to the decoder instead of its own prediction. This can accelerate training but may lead to exposure bias during inference.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train_step</span><span class="p">(</span><span class="n">encoder</span><span class="p">,</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">input_seq</span><span class="p">,</span> <span class="n">target_seq</span><span class="p">,</span> <span class="n">teacher_forcing_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+    <span class="n">encoder_output</span><span class="p">,</span> <span class="n">encoder_hidden</span> <span class="o">=</span> <span class="nf">encoder</span><span class="p">(</span><span class="n">input_seq</span><span class="p">)</span>
     
-    <img src="/assets/img/batch-normalization-example.png" width="100%" height="auto" title="Batch normalization example plot" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-  </picture>
+    <span class="n">decoder_input</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">([[</span><span class="n">SOS_token</span><span class="p">]])</span>
+    <span class="n">decoder_hidden</span> <span class="o">=</span> <span class="n">encoder_hidden</span>
+    
+    <span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">use_teacher_forcing</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="nf">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">teacher_forcing_ratio</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">target_seq</span><span class="p">)):</span>
+        <span class="n">decoder_output</span><span class="p">,</span> <span class="n">decoder_hidden</span> <span class="o">=</span> <span class="nf">decoder</span><span class="p">(</span><span class="n">decoder_input</span><span class="p">,</span> <span class="n">decoder_hidden</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">+=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">decoder_output</span><span class="p">,</span> <span class="n">target_seq</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        
+        <span class="k">if</span> <span class="n">use_teacher_forcing</span><span class="p">:</span>
+            <span class="n">decoder_input</span> <span class="o">=</span> <span class="n">target_seq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">topv</span><span class="p">,</span> <span class="n">topi</span> <span class="o">=</span> <span class="n">decoder_output</span><span class="p">.</span><span class="nf">topk</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">decoder_input</span> <span class="o">=</span> <span class="n">topi</span><span class="p">.</span><span class="nf">squeeze</span><span class="p">().</span><span class="nf">detach</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">loss</span>
+</code></pre></div></div> <h3 id="handling-variable-length-sequences">Handling Variable-Length Sequences</h3> <p>In practice, sequences have different lengths. We use padding to create fixed-size batches and masking to ignore padded elements during loss computation.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Example of padding sequences
+</span><span class="kn">from</span> <span class="n">torch.nn.utils.rnn</span> <span class="kn">import</span> <span class="n">pad_sequence</span>
 
-  
-    <figcaption class="caption">A Python-generated visualization of the example activations before normalization, after normalization, and after scale-and-shift.</figcaption>
-  
-</figure>
+<span class="k">def</span> <span class="nf">collate_fn</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
+    <span class="n">input_seqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">]</span>
+    <span class="n">target_seqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">]</span>
+    
+    <span class="n">input_padded</span> <span class="o">=</span> <span class="nf">pad_sequence</span><span class="p">(</span><span class="n">input_seqs</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">padding_value</span><span class="o">=</span><span class="n">PAD_token</span><span class="p">)</span>
+    <span class="n">target_padded</span> <span class="o">=</span> <span class="nf">pad_sequence</span><span class="p">(</span><span class="n">target_seqs</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">padding_value</span><span class="o">=</span><span class="n">PAD_token</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">input_padded</span><span class="p">,</span> <span class="n">target_padded</span>
+</code></pre></div></div> <p>[Placeholder for Training Diagram: A diagram showing the training loop with encoder-decoder flow and loss computation]</p> <h2 id="inference-and-evaluation">Inference and Evaluation</h2> <p>During inference, the decoder generates tokens autoregressively, using its own predictions as input for subsequent steps.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">generate_sequence</span><span class="p">(</span><span class="n">encoder</span><span class="p">,</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">input_seq</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+        <span class="n">encoder_output</span><span class="p">,</span> <span class="n">encoder_hidden</span> <span class="o">=</span> <span class="nf">encoder</span><span class="p">(</span><span class="n">input_seq</span><span class="p">)</span>
+        
+        <span class="n">decoder_input</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">([[</span><span class="n">SOS_token</span><span class="p">]])</span>
+        <span class="n">decoder_hidden</span> <span class="o">=</span> <span class="n">encoder_hidden</span>
+        
+        <span class="n">generated_seq</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">max_length</span><span class="p">):</span>
+            <span class="n">decoder_output</span><span class="p">,</span> <span class="n">decoder_hidden</span> <span class="o">=</span> <span class="nf">decoder</span><span class="p">(</span><span class="n">decoder_input</span><span class="p">,</span> <span class="n">decoder_hidden</span><span class="p">)</span>
+            <span class="n">topv</span><span class="p">,</span> <span class="n">topi</span> <span class="o">=</span> <span class="n">decoder_output</span><span class="p">.</span><span class="nf">topk</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">decoder_input</span> <span class="o">=</span> <span class="n">topi</span><span class="p">.</span><span class="nf">squeeze</span><span class="p">().</span><span class="nf">detach</span><span class="p">()</span>
+            
+            <span class="k">if</span> <span class="n">decoder_input</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span> <span class="o">==</span> <span class="n">EOS_token</span><span class="p">:</span>
+                <span class="k">break</span>
+                
+            <span class="n">generated_seq</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">decoder_input</span><span class="p">.</span><span class="nf">item</span><span class="p">())</span>
+        
+        <span class="k">return</span> <span class="n">generated_seq</span>
+</code></pre></div></div> <h3 id="bleu-score-for-evaluation">BLEU Score for Evaluation</h3> <p>BLEU (Bilingual Evaluation Understudy) is a common metric for evaluating machine translation quality. It compares n-grams between generated and reference translations.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">torchtext.data.metrics</span> <span class="kn">import</span> <span class="n">bleu_score</span>
 
-<h3 id="22-inferencetesting-phase">2.2 Inference/Testing Phase</h3>
-
-<p>During inference, instead of recalculating mean (𝜇) and variance (𝜎²) for each batch, use <strong>moving averages</strong> / <strong>running statistics</strong> of the mean and variance collected during training.</p>
-
-<h2 id="3-running-statistics">3. Running Statistics</h2>
-
-<p><strong>Note</strong>: For simplicity of understanding assume a single GPU training instant for following. So batch == mini batch.</p>
-
-<h3 id="31-introduction">3.1 Introduction</h3>
-
-<p>In Batch Normalization, <strong>running statistics</strong> refer to the mean (𝜇) and variance (𝜎²) of the activations that are computed per BN layer <strong>for all batches during training</strong>. These statistics represent a <strong>global mean and variance of the data</strong>.</p>
-
-<ul>
-  <li>During <strong>training</strong>, the mean and variance are computed on each mini-batch. But we also maintain a “moving average” of these values across all mini-batches. This is what we call the <strong>running statistics</strong>. Do not mistake Running statistics as same as learnable parameters, they are different concepts.</li>
-  <li>During <strong>inference</strong>, these running statistics are used instead of recalculating the mean and variance on each input batch.</li>
-</ul>
-
-<h3 id="32-implementation">3.2 Implementation</h3>
-
-<p>The running mean and variance are updated incrementally using a moving average formula <strong>(exponential moving average (EMA))</strong> as each batch is processed. The idea is to slowly average the batch statistics over time to estimate the overall mean and variance.</p>
-
-<p>For the mean ($\mu_{\text{running}}$) and variance ($\sigma_{\text{running}}^2$):</p>
-
-\[\mu_{\text{running}} \gets (1 - \alpha) \cdot \mu_{\text{running}} + \alpha \cdot \mu_{\text{current-batch}}\]
-
-\[\sigma_{\text{running}}^2 \gets (1 - \alpha) \cdot \sigma_{\text{running}}^2 + \alpha \cdot \sigma_{\text{current-batch}}^2\]
-
-<p>Where:</p>
-
-<ul>
-  <li>$\alpha$ is the <strong>momentum parameter</strong> (e.g., 0.9 or 0.99), which controls the influence or how quickly the running statistics adapt to new data.</li>
-  <li>(1−$\alpha$) determines how much influence previous running statistics have.</li>
-  <li>$\mu_{\text{current-batch}}$ and $\sigma_{\text{current-batch}}^2$ are the mean and variance computed on the current mini-batch.</li>
-</ul>
-
-<p>Once training is complete:</p>
-
-<p>The running mean ($\mu_{\text{running}}$) and running variance ($\sigma_{\text{running}}^2$) are fixed.
-These are used for normalization during inference to ensure consistency:</p>
-
-\[\hat{x} = \frac{x - \mu_{\text{running}}}{\sqrt{\sigma_{\text{running}}^2 + \epsilon}}\]
-
-<p><strong>Key Properties of EMA</strong></p>
-
-<ol>
-  <li>Weighted Contribution:
-    <ul>
-      <li>Recent mini-batches contribute more to the running statistics.</li>
-      <li>Older mini-batches have less influence over time due to the decaying factor (1−α).</li>
-    </ul>
-  </li>
-  <li>Smoothed Global Estimate:
-    <ul>
-      <li>The running mean and variance gradually stabilize over many mini-batches and approximate the global statistics of the entire dataset.</li>
-    </ul>
-  </li>
-</ol>
-
-<p><strong>Example</strong>:</p>
-
-<p>Suppose we are training with 3 mini-batches, and the batch-specific means are:</p>
-
-<p>Mini-batch 1:
-$\mu_{\text{current-batch}} = 5.0$</p>
-
-<p>Mini-batch 2:
-$\mu_{\text{current-batch}} = 6.0$</p>
-
-<p>Mini-batch 3:
-$\mu_{\text{current-batch}} = 7.0$</p>
-
-<p>Let the initial running mean be $\mu_{\text{running}} = 0.0$ and momentum $\alpha = 0.9$.</p>
-
-<p>Step 1 (Mini-batch 1):</p>
-
-\[\mu_{\text{running}} = (1 - 0.9) \cdot 0.0 + 0.9 \cdot 5.0 = 4.5\]
-
-<p>Step 2 (Mini-batch 2):</p>
-
-\[\mu_{\text{running}} = (1 - 0.9) \cdot 4.5 + 0.9 \cdot 6.0 = 5.85\]
-
-<p>Step 3 (Mini-batch 3):</p>
-
-\[\mu_{\text{running}} = (1 - 0.9) \cdot 5.85 + 0.9 \cdot 7.0 = 6.765\]
-
-<p>Similarly, the running variance $\sigma_{\text{running}}^2$ is updated using the same formula with the batch variance.</p>
-
-<h2 id="4-dynamic-momentum-vs-static-momentum">4. Dynamic Momentum vs Static Momentum</h2>
-
-<p>Formulas to calculate moving average with a fixed momentum values have a static momentum. <strong>EMA</strong> has a static momentum (eg: 0.9).</p>
-
-<p>Dynamic momentum offers several advantages over static momentum when calculating running statistics in Batch Normalization:</p>
-
-<ol>
-  <li><strong>Adaptability to Training Dynamics</strong>:
-    <ul>
-      <li>Dynamic momentum adjusts the contribution of the current batch and past batches based on the training stage or data behavior.</li>
-      <li>In early training, it may weigh current statistics more heavily, allowing faster adaptation to changing patterns.</li>
-      <li>Later in training, it can prioritize past statistics, stabilizing the updates.</li>
-    </ul>
-  </li>
-  <li><strong>Improved Stability</strong>:
-    <ul>
-      <li>Static momentum uses a fixed value, which might not suit all training stages or datasets.</li>
-      <li>Dynamic momentum can help avoid oscillations during training by adapting the smoothing factor as needed.</li>
-    </ul>
-  </li>
-  <li><strong>Better Handling of Non-Stationary Data</strong>:
-    <ul>
-      <li>Dynamic momentum can respond to shifts in data distribution more effectively, ensuring that the running statistics stay representative of the underlying data.</li>
-    </ul>
-  </li>
-  <li><strong>Optimized Convergence</strong>:
-    <ul>
-      <li>By adjusting the momentum dynamically, models can converge faster and more reliably, especially in cases where the optimal fixed momentum value is hard to determine.</li>
-    </ul>
-  </li>
-  <li><strong>Customizability</strong>:
-    <ul>
-      <li>Dynamic momentum allows for more nuanced control, as it can be tied to training variables like the learning rate, epoch, or batch size, making it more flexible for different use cases.</li>
-    </ul>
-  </li>
-</ol>
-
-<p>Momentum is adjusted based on the training epoch or iteration. This is what is usually enclosed inside a <strong>Batch Normalization Momentum Schedular</strong>.</p>
-
-<p>Common strategies include:</p>
-
-<ol>
-  <li><strong>Linear Decay</strong>:
-\(\text{momentum} = \text{start} - \left( \frac{\text{epoch}}{\text{total\_epochs}} \times (\text{start} - \text{end}) \right)\)</li>
-  <li><strong>Exponential Decay</strong>:
-\(\text{momentum} = \text{start} \cdot \text{(decay\_rate)}^{\text{epoch}}\)</li>
-</ol>
-
-<p><strong>Example</strong></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="k">def</span> <span class="nf">compute_bleu</span><span class="p">(</span><span class="n">generated_sequences</span><span class="p">,</span> <span class="n">reference_sequences</span><span class="p">):</span>
+    <span class="n">candidates</span> <span class="o">=</span> <span class="p">[[</span><span class="n">seq</span><span class="p">]</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">generated_sequences</span><span class="p">]</span>  <span class="c1"># List of lists
+</span>    <span class="n">references</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ref</span><span class="p">]</span> <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">reference_sequences</span><span class="p">]</span>  <span class="c1"># List of lists of lists
+</span>    
+    <span class="k">return</span> <span class="nf">bleu_score</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">references</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="advanced-techniques-and-considerations">Advanced Techniques and Considerations</h2> <h3 id="attention-mechanism">Attention Mechanism</h3> <p>While basic seq2seq models work well for short sequences, they struggle with long-range dependencies. Attention mechanisms allow the decoder to focus on relevant parts of the input sequence at each decoding step, significantly improving performance.</p> <h3 id="bidirectional-encoders">Bidirectional Encoders</h3> <p>Using bidirectional RNNs in the encoder can capture both forward and backward context, providing richer representations.</p> <h3 id="beam-search">Beam Search</h3> <p>Instead of greedy decoding, beam search maintains multiple candidate sequences during generation, often leading to better results.</p> <h2 id="challenges-and-future-directions">Challenges and Future Directions</h2> <p>Seq2seq models with RNNs have limitations, including difficulty handling very long sequences and computational inefficiency. Modern approaches like Transformer architectures have largely superseded RNN-based seq2seq models for many tasks due to their parallelization capabilities and better handling of long-range dependencies.</p> <p>However, understanding RNN-based seq2seq remains crucial for grasping the foundations of sequence modeling and can still be effective for certain applications.</p> <h2 id="conclusion">Conclusion</h2> <p>Sequence-to-sequence modeling with recurrent neural networks provides a solid foundation for understanding how to process and generate sequential data. By breaking down the encoder-decoder architecture, training strategies, and evaluation methods, we can appreciate both the power and limitations of this approach. As the field evolves, these concepts continue to inform more advanced sequence modeling techniques.</p> <p>[Placeholder for Complete Architecture Diagram: A comprehensive diagram showing the full seq2seq pipeline from input to output]</p>]]></content><author><name>Kulunu Samarawickrama</name></author><summary type="html"><![CDATA[An in-depth exploration of sequence-to-sequence modeling using RNNs for tasks like machine translation and text generation]]></summary></entry><entry><title type="html">Batch Normalization in Neural Networks: A Comprehensive Guide</title><link href="https://kulunuos.github.io/blog/2026/BatchNormalization/" rel="alternate" type="text/html" title="Batch Normalization in Neural Networks: A Comprehensive Guide"/><published>2026-04-09T00:00:00+00:00</published><updated>2026-04-09T00:00:00+00:00</updated><id>https://kulunuos.github.io/blog/2026/BatchNormalization</id><content type="html" xml:base="https://kulunuos.github.io/blog/2026/BatchNormalization/"><![CDATA[<h2 id="contents">Contents</h2> <ol> <li><a href="#1-intuition-behind-batch-normalization">1. Intuition Behind Batch Normalization</a></li> <li><a href="#2-core-logic">2. Core Logic</a></li> <li><a href="#3-running-statistics">3. Running Statistics</a></li> <li><a href="#4-dynamic-momentum-vs-static-momentum">4. Dynamic Momentum vs Static Momentum</a></li> <li><a href="#5-batch-normalization-in-multigpu-training">5. Batch Normalization in MultiGPU Training</a></li> <li><a href="#6-multi-gpu-running-stats-advanced">6. Multi GPU Running Stats (ADVANCED)</a></li> </ol> <h2 id="1-intuition-behind-batch-normalization">1. Intuition Behind Batch Normalization</h2> <p>Imagine you’re training a machine learning model (like a neural network) to classify images. Each layer of the model learns patterns from the data, but sometimes, these patterns get misaligned due to large variations in the input data or intermediate outputs (activations). This can slow down training and make optimization difficult.</p> <p>Batch Normalization (BN) is like a “balancing act” that ensures the activations (outputs of neurons) at each layer remain well-scaled and centered. It stabilizes the learning process and helps the network converge faster.</p> <p>Think of it as making sure the data flowing through your network behaves consistently, like keeping traffic on a highway moving smoothly without bottlenecks.</p> <p><strong>Why is Batch Normalization Useful?</strong></p> <ul> <li><strong>Stabilizes Training</strong>: Keeps activations well-scaled, avoiding extreme values that can destabilize training.</li> <li><strong>Speeds Up Convergence</strong>: Reduces the need for careful initialization and aggressive learning rate tuning.</li> <li><strong>Regularization Effect</strong>: Acts as a mild form of regularization by adding noise to activations, reducing over fitting.</li> <li>Accurate running statistics help the model generalize to unseen data during inference, ensuring consistent prediction.</li> </ul> <h2 id="2-core-logic">2. Core Logic</h2> <p>At its core, Batch Normalization normalizes the activations of a layer for each mini-batch during training.</p> <h3 id="21-training-phase">2.1 Training Phase</h3> <ol> <li> <p><strong>Calculate the Mean and Variance</strong></p> <p>For each feature in the mini-batch, compute the mean (𝜇) and variance (𝜎²).</p> </li> <li> <p><strong>Normalize the Activations</strong></p> <p>Center and scale the activations so they have zero mean and unit variance:</p> \[\hat{x} = \frac{x - \mu}{\sqrt{\sigma^2 + \epsilon}}\] <p>Here, 𝜖 is a small constant added for numerical stability (to avoid division by zero).</p> </li> <li> <p><strong>Learnable Scaling and Shifting</strong></p> <p>Instead of just normalizing, Batch Normalization introduces learnable parameters 𝛾 (scale) and 𝛽 (shift), allowing the model to adjust the normalized values:</p> \[y = \gamma \hat{x} + \beta\] </li> </ol> <ul> <li>learnable parameters 𝛾 (scale) and 𝛽 (shift) are learned separately for each BN layer.</li> <li>learnable parameters 𝛾 (scale) and 𝛽 (shift) are shared across all mini-batches (whole batch) per BN layer in the network.</li> <li>learnable parameters 𝛾 (scale) and 𝛽 (shift) are learned/updated during back propagation.</li> </ul> <ol> <li> <p><strong>Important to Note</strong></p> <p>If you have a neural network with 3 Batch Normalization layers, and each layer has $k$ output features, then:</p> <ol> <li>Each layer has its own set of $\gamma$ and $\beta$ parameters, with $k$ parameters for each.</li> <li>These parameters are learned globally for the layer and remain fixed after training.</li> </ol> <p>For example:</p> <ul> <li><strong>Layer 1</strong> (output dimension $k_1$): \(\gamma_1 \in \mathbb{R}^{k_1}, \quad \beta_1 \in \mathbb{R}^{k_1}\)</li> <li><strong>Layer 2</strong> (output dimension $k_2$): \(\gamma_2 \in \mathbb{R}^{k_2}, \quad \beta_2 \in \mathbb{R}^{k_2}\)</li> </ul> </li> </ol> <h3 id="batch-normalization-example">Batch Normalization Example</h3> <p>Imagine a single layer of a neural network that outputs:</p> \[x = [2.0, 4.0, 6.0, 8.0]\] <p>The mean ($\mu$) is calculated as:</p> \[\mu = \frac{2.0 + 4.0 + 6.0 + 8.0}{4} = 5.0\] <p>The variance ($\sigma^2$) is calculated as:</p> \[\sigma^2 = \frac{(2 - 5)^2 + (4 - 5)^2 + (6 - 5)^2 + (8 - 5)^2}{4} = 5.0\] <h4 id="step-2-normalize">Step 2: Normalize</h4> <p>For each $x_i$, calculate the normalized value:</p> \[\hat{x}_i = \frac{x_i - \mu}{\sqrt{\sigma^2 + \epsilon}}\] <p>Using $\epsilon = 1e^{-5}$ for numerical stability:</p> \[\hat{x} = \left[ \frac{2 - 5}{\sqrt{5 + 1e^{-5}}}, \frac{4 - 5}{\sqrt{5 + 1e^{-5}}}, \frac{6 - 5}{\sqrt{5 + 1e^{-5}}}, \frac{8 - 5}{\sqrt{5 + 1e^{-5}}} \right]\] <p>Simplifying:</p> \[\hat{x} = [-1.34, -0.45, 0.45, 1.34]\] <h4 id="step-3-scale-and-shift">Step 3: Scale and Shift</h4> <p>Assume $\gamma = 2.0$ (scale) and $\beta = 1.0$ (shift). Then:</p> \[y_i = \gamma \hat{x}_i + \beta\] <p>Substitute the values:</p> \[y = [2(-1.34) + 1, 2(-0.45) + 1, 2(0.45) + 1, 2(1.34) + 1]\] <p>Simplifying:</p> \[y = [-1.68, 0.1, 1.9, 3.68]\] <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/batch-normalization-example-480.webp 480w,/assets/img/batch-normalization-example-800.webp 800w,/assets/img/batch-normalization-example-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/batch-normalization-example.png" width="100%" height="auto" title="Batch normalization example plot" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> <figcaption class="caption">A Python-generated visualization of the example activations before normalization, after normalization, and after scale-and-shift.</figcaption> </figure> <h3 id="22-inferencetesting-phase">2.2 Inference/Testing Phase</h3> <p>During inference, instead of recalculating mean (𝜇) and variance (𝜎²) for each batch, use <strong>moving averages</strong> / <strong>running statistics</strong> of the mean and variance collected during training.</p> <h2 id="3-running-statistics">3. Running Statistics</h2> <p><strong>Note</strong>: For simplicity of understanding assume a single GPU training instant for following. So batch == mini batch.</p> <h3 id="31-introduction">3.1 Introduction</h3> <p>In Batch Normalization, <strong>running statistics</strong> refer to the mean (𝜇) and variance (𝜎²) of the activations that are computed per BN layer <strong>for all batches during training</strong>. These statistics represent a <strong>global mean and variance of the data</strong>.</p> <ul> <li>During <strong>training</strong>, the mean and variance are computed on each mini-batch. But we also maintain a “moving average” of these values across all mini-batches. This is what we call the <strong>running statistics</strong>. Do not mistake Running statistics as same as learnable parameters, they are different concepts.</li> <li>During <strong>inference</strong>, these running statistics are used instead of recalculating the mean and variance on each input batch.</li> </ul> <h3 id="32-implementation">3.2 Implementation</h3> <p>The running mean and variance are updated incrementally using a moving average formula <strong>(exponential moving average (EMA))</strong> as each batch is processed. The idea is to slowly average the batch statistics over time to estimate the overall mean and variance.</p> <p>For the mean ($\mu_{\text{running}}$) and variance ($\sigma_{\text{running}}^2$):</p> \[\mu_{\text{running}} \gets (1 - \alpha) \cdot \mu_{\text{running}} + \alpha \cdot \mu_{\text{current-batch}}\] \[\sigma_{\text{running}}^2 \gets (1 - \alpha) \cdot \sigma_{\text{running}}^2 + \alpha \cdot \sigma_{\text{current-batch}}^2\] <p>Where:</p> <ul> <li>$\alpha$ is the <strong>momentum parameter</strong> (e.g., 0.9 or 0.99), which controls the influence or how quickly the running statistics adapt to new data.</li> <li>(1−$\alpha$) determines how much influence previous running statistics have.</li> <li>$\mu_{\text{current-batch}}$ and $\sigma_{\text{current-batch}}^2$ are the mean and variance computed on the current mini-batch.</li> </ul> <p>Once training is complete:</p> <p>The running mean ($\mu_{\text{running}}$) and running variance ($\sigma_{\text{running}}^2$) are fixed. These are used for normalization during inference to ensure consistency:</p> \[\hat{x} = \frac{x - \mu_{\text{running}}}{\sqrt{\sigma_{\text{running}}^2 + \epsilon}}\] <p><strong>Key Properties of EMA</strong></p> <ol> <li>Weighted Contribution: <ul> <li>Recent mini-batches contribute more to the running statistics.</li> <li>Older mini-batches have less influence over time due to the decaying factor (1−α).</li> </ul> </li> <li>Smoothed Global Estimate: <ul> <li>The running mean and variance gradually stabilize over many mini-batches and approximate the global statistics of the entire dataset.</li> </ul> </li> </ol> <p><strong>Example</strong>:</p> <p>Suppose we are training with 3 mini-batches, and the batch-specific means are:</p> <p>Mini-batch 1: $\mu_{\text{current-batch}} = 5.0$</p> <p>Mini-batch 2: $\mu_{\text{current-batch}} = 6.0$</p> <p>Mini-batch 3: $\mu_{\text{current-batch}} = 7.0$</p> <p>Let the initial running mean be $\mu_{\text{running}} = 0.0$ and momentum $\alpha = 0.9$.</p> <p>Step 1 (Mini-batch 1):</p> \[\mu_{\text{running}} = (1 - 0.9) \cdot 0.0 + 0.9 \cdot 5.0 = 4.5\] <p>Step 2 (Mini-batch 2):</p> \[\mu_{\text{running}} = (1 - 0.9) \cdot 4.5 + 0.9 \cdot 6.0 = 5.85\] <p>Step 3 (Mini-batch 3):</p> \[\mu_{\text{running}} = (1 - 0.9) \cdot 5.85 + 0.9 \cdot 7.0 = 6.765\] <p>Similarly, the running variance $\sigma_{\text{running}}^2$ is updated using the same formula with the batch variance.</p> <h2 id="4-dynamic-momentum-vs-static-momentum">4. Dynamic Momentum vs Static Momentum</h2> <p>Formulas to calculate moving average with a fixed momentum values have a static momentum. <strong>EMA</strong> has a static momentum (eg: 0.9).</p> <p>Dynamic momentum offers several advantages over static momentum when calculating running statistics in Batch Normalization:</p> <ol> <li><strong>Adaptability to Training Dynamics</strong>: <ul> <li>Dynamic momentum adjusts the contribution of the current batch and past batches based on the training stage or data behavior.</li> <li>In early training, it may weigh current statistics more heavily, allowing faster adaptation to changing patterns.</li> <li>Later in training, it can prioritize past statistics, stabilizing the updates.</li> </ul> </li> <li><strong>Improved Stability</strong>: <ul> <li>Static momentum uses a fixed value, which might not suit all training stages or datasets.</li> <li>Dynamic momentum can help avoid oscillations during training by adapting the smoothing factor as needed.</li> </ul> </li> <li><strong>Better Handling of Non-Stationary Data</strong>: <ul> <li>Dynamic momentum can respond to shifts in data distribution more effectively, ensuring that the running statistics stay representative of the underlying data.</li> </ul> </li> <li><strong>Optimized Convergence</strong>: <ul> <li>By adjusting the momentum dynamically, models can converge faster and more reliably, especially in cases where the optimal fixed momentum value is hard to determine.</li> </ul> </li> <li><strong>Customizability</strong>: <ul> <li>Dynamic momentum allows for more nuanced control, as it can be tied to training variables like the learning rate, epoch, or batch size, making it more flexible for different use cases.</li> </ul> </li> </ol> <p>Momentum is adjusted based on the training epoch or iteration. This is what is usually enclosed inside a <strong>Batch Normalization Momentum Schedular</strong>.</p> <p>Common strategies include:</p> <ol> <li><strong>Linear Decay</strong>: \(\text{momentum} = \text{start} - \left( \frac{\text{epoch}}{\text{total\_epochs}} \times (\text{start} - \text{end}) \right)\)</li> <li><strong>Exponential Decay</strong>: \(\text{momentum} = \text{start} \cdot \text{(decay\_rate)}^{\text{epoch}}\)</li> </ol> <p><strong>Example</strong></p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
 <span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
 <span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
@@ -358,61 +267,7 @@ $\mu_{\text{current-batch}} = 7.0$</p>
 
 <span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
-</code></pre></div></div>
-
-<figure>
-  <picture>
-    <!-- Auto scaling with imagemagick -->
-    <!--
-      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
-      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
-    -->
-    
-      
-        <source class="responsive-img-srcset" srcset="/assets/img/batch-normalization-momentum-comparison-480.webp 480w,/assets/img/batch-normalization-momentum-comparison-800.webp 800w,/assets/img/batch-normalization-momentum-comparison-1400.webp 1400w," type="image/webp" sizes="95vw" />
-      
-    
-    <img src="/assets/img/batch-normalization-momentum-comparison.png" width="100%" height="auto" title="Static vs dynamic momentum comparison" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-  </picture>
-
-  
-    <figcaption class="caption">A Python-generated comparison of running mean and running variance under static momentum and a simple dynamic momentum schedule.</figcaption>
-  
-</figure>
-
-<h2 id="5-batch-normalization-in-multigpu-training">5. Batch Normalization in MultiGPU Training</h2>
-
-<p>When training on <strong>multiple GPUs using Distributed Data Parallel (DDP)</strong>, the data is divided across GPUs. Each GPU processes its portion of the batch independently. Batch Normalization works on <strong>per-GPU mini-batches</strong>, meaning that the mean and variance for normalization are computed only from the samples on that GPU.</p>
-
-<p><strong>Problem in Multi-GPU Training</strong></p>
-
-<ul>
-  <li><strong>Inconsistent Statistics</strong>: Since each GPU computes its own mean and variance for Batch Normalization, the model might end up using slightly different statistics for the same layer on different GPUs. This inconsistency can lead to degraded performance, especially when the per-GPU batch size is small.</li>
-  <li><strong>Small Batch Size Issue</strong>: Batch Normalization relies on accurate statistics, which are harder to compute with small batch sizes.</li>
-</ul>
-
-<h3 id="51-synchronized-batch-normalization">5.1 Synchronized Batch Normalization</h3>
-
-<p><strong>Synchronized Batch Normalization (SyncBatchNorm)</strong> solves the problem by synchronizing the mean and variance across all GPUs during training. Instead of computing batch statistics per GPU, SyncBatchNorm gathers activations from all GPUs, computes global statistics (mean and variance), and uses these shared statistics for normalization.</p>
-
-<p><strong>How SyncBatchNorm Works</strong></p>
-
-<ul>
-  <li>During the forward pass:
-    <ul>
-      <li>Activations from all GPUs are gathered.</li>
-      <li>Global mean and variance are computed using all activations.</li>
-      <li>These global statistics are used to normalize the activations on all GPUs.</li>
-    </ul>
-  </li>
-  <li>The process involves communication between GPUs, which is handled using efficient backends like <strong>NCCL</strong>.</li>
-</ul>
-
-<p><strong>To convert a model to use Synchronized Batch Normalization in Pytorch</strong>:</p>
-
-<p>The following code is partial and only an example!</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">torch.nn</span> <span class="kn">import</span> <span class="n">SyncBatchNorm</span>
+</code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/batch-normalization-momentum-comparison-480.webp 480w,/assets/img/batch-normalization-momentum-comparison-800.webp 800w,/assets/img/batch-normalization-momentum-comparison-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/batch-normalization-momentum-comparison.png" width="100%" height="auto" title="Static vs dynamic momentum comparison" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> <figcaption class="caption">A Python-generated comparison of running mean and running variance under static momentum and a simple dynamic momentum schedule.</figcaption> </figure> <h2 id="5-batch-normalization-in-multigpu-training">5. Batch Normalization in MultiGPU Training</h2> <p>When training on <strong>multiple GPUs using Distributed Data Parallel (DDP)</strong>, the data is divided across GPUs. Each GPU processes its portion of the batch independently. Batch Normalization works on <strong>per-GPU mini-batches</strong>, meaning that the mean and variance for normalization are computed only from the samples on that GPU.</p> <p><strong>Problem in Multi-GPU Training</strong></p> <ul> <li><strong>Inconsistent Statistics</strong>: Since each GPU computes its own mean and variance for Batch Normalization, the model might end up using slightly different statistics for the same layer on different GPUs. This inconsistency can lead to degraded performance, especially when the per-GPU batch size is small.</li> <li><strong>Small Batch Size Issue</strong>: Batch Normalization relies on accurate statistics, which are harder to compute with small batch sizes.</li> </ul> <h3 id="51-synchronized-batch-normalization">5.1 Synchronized Batch Normalization</h3> <p><strong>Synchronized Batch Normalization (SyncBatchNorm)</strong> solves the problem by synchronizing the mean and variance across all GPUs during training. Instead of computing batch statistics per GPU, SyncBatchNorm gathers activations from all GPUs, computes global statistics (mean and variance), and uses these shared statistics for normalization.</p> <p><strong>How SyncBatchNorm Works</strong></p> <ul> <li>During the forward pass: <ul> <li>Activations from all GPUs are gathered.</li> <li>Global mean and variance are computed using all activations.</li> <li>These global statistics are used to normalize the activations on all GPUs.</li> </ul> </li> <li>The process involves communication between GPUs, which is handled using efficient backends like <strong>NCCL</strong>.</li> </ul> <p><strong>To convert a model to use Synchronized Batch Normalization in Pytorch</strong>:</p> <p>The following code is partial and only an example!</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">torch.nn</span> <span class="kn">import</span> <span class="n">SyncBatchNorm</span>
 <span class="kn">import</span> <span class="n">pytorch_lightning</span> <span class="k">as</span> <span class="n">pl</span>
 <span class="kn">from</span> <span class="n">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Trainer</span>
 
@@ -451,322 +306,4 @@ $\mu_{\text{current-batch}} = 7.0$</p>
 
 <span class="n">lightning_model</span> <span class="o">=</span> <span class="nc">LightningModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 <span class="n">trainer</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">lightning_model</span><span class="p">)</span>
-</code></pre></div></div>
-
-<h2 id="6-multi-gpu-running-stats-advanced">6. Multi GPU Running Stats (ADVANCED)</h2>
-
-<p><strong>Key Challenge in Multi-GPU Training</strong></p>
-
-<p>In multi-GPU setups:</p>
-
-<ul>
-  <li>Each GPU processes its own mini-batch of data independently.</li>
-  <li>Batch Normalization is designed to compute the mean and variance for the entire mini-batch across the GPUs, but each GPU initially only “sees” the activations of its local mini-batch.</li>
-</ul>
-
-<p><strong>Example:</strong></p>
-
-<p>If:</p>
-
-<ul>
-  <li>Batch size per GPU = 32</li>
-  <li>Number of GPUs = 3</li>
-</ul>
-
-<p>The total batch size is $32 \times 3 = 96$.</p>
-
-<p>However:</p>
-
-<ul>
-  <li>GPU 1 computes statistics for its 32 samples.</li>
-  <li>GPU 2 computes statistics for its 32 samples.</li>
-  <li>GPU 3 computes statistics for its 32 samples.</li>
-</ul>
-
-<p>This results in local batch statistics on each GPU, which are insufficient for calculating global statistics across all 96 samples.</p>
-
-<p><strong>Solution: Synchronizing Batch Statistics</strong></p>
-
-<p>To solve this, synchronized Batch Normalization (SyncBN) is used. Here’s how it works:</p>
-
-<p><strong>Step 1: Compute Local Statistics</strong></p>
-
-<p>Each GPU computes the mean ($\mu_{\text{local}}$) and variance ($\sigma_{\text{local}}^2$) for its local mini-batch of size 32.</p>
-
-<p><strong>Step 2: All-Reduce Operation</strong></p>
-
-<p>The local statistics from all GPUs are aggregated using a collective communication operation called all-reduce. This operation computes the global mean and variance by:</p>
-
-<ul>
-  <li>Summing the local means and variances from all GPUs.</li>
-  <li>Dividing by the total number of samples ($32 \times 3 = 96$) to compute the global statistics.</li>
-</ul>
-
-<p><strong>Formulas:</strong></p>
-
-<p>Global Mean:</p>
-
-\[\mu_{\text{global}} = \frac{\sum_{g=1}^{N} \left( \mu_{\text{local}, g} \cdot \text{batch\_size}_g \right)}{\text{total\_batch\_size}}\]
-
-<p>Global Variance:</p>
-
-\[\sigma_{\text{global}}^2 = \frac{\sum_{g=1}^{N} \left( \sigma_{\text{local}, g}^2 + \left( \mu_{\text{local}, g} - \mu_{\text{global}} \right)^2 \right) \cdot \text{batch\_size}_g}{\text{total\_batch\_size}}\]
-
-<p>Where:</p>
-
-<ul>
-  <li>$N$: Number of GPUs.</li>
-  <li>$\text{batch_size}_g$: Mini-batch size on GPU $g$.</li>
-</ul>
-
-<h3 id="61-running-statistics-in-multi-gpu-training">6.1 Running Statistics in Multi-GPU Training</h3>
-
-<p>When it comes to the running statistics (e.g., running mean and variance used during inference):</p>
-
-<ul>
-  <li>After each mini-batch:
-    <ul>
-      <li>The global statistics ($\mu_{\text{global}}$ and $\sigma_{\text{global}}^2$) are computed using the method above.</li>
-      <li>Update the running statistics using the same moving average formula:</li>
-    </ul>
-  </li>
-</ul>
-
-\[\mu_{\text{running}} \gets (1 - \alpha) \cdot \mu_{\text{running}} + \alpha \cdot \mu_{\text{global}}\]
-
-\[\sigma_{\text{running}}^2 \gets (1 - \alpha) \cdot \sigma_{\text{running}}^2 + \alpha \cdot \sigma_{\text{global}}^2\]
-
-<p>Thus, the running statistics reflect the global behavior of the activations across all GPUs.</p>
-
-<h3 id="62-why-syncbn-is-important">6.2 Why SyncBN Is Important</h3>
-
-<p>Without synchronized Batch Normalization:</p>
-
-<ul>
-  <li>Each GPU would compute statistics based only on its local mini-batch.</li>
-  <li>This could lead to inconsistent normalization and harm the model’s performance, especially when the total batch size is large or the batch size per GPU is small.</li>
-</ul>
-
-<h3 id="63-alternatives-to-syncbn">6.3 Alternatives to SyncBN</h3>
-
-<p>When SyncBN is impractical or expensive:</p>
-
-<ul>
-  <li><strong>Group Normalization (GN):</strong> Divides channels into groups and normalizes them within each group, removing the need for batch-wide statistics.</li>
-  <li><strong>Instance Normalization (IN):</strong> Normalizes each sample independently.</li>
-  <li><strong>Layer Normalization (LN):</strong> Normalizes across the features of each input independently of the batch size.</li>
-</ul>
-
-<p>These alternatives avoid the need for synchronization but might have different performance characteristics.</p>
-
-<h3 id="64-summary">6.4 Summary</h3>
-
-<p>In multi-GPU training, synchronized Batch Normalization is used to compute global mean and variance across all GPUs.</p>
-
-<ul>
-  <li>The local statistics on each GPU are aggregated using an all-reduce operation.</li>
-  <li>The running statistics (used for inference) are updated based on the global statistics, ensuring consistency across GPUs.</li>
-  <li>SyncBN is critical for maintaining consistent normalization across all GPUs, especially in distributed setups.</li>
-</ul>]]></content><author><name></name></author><category term="deep-learning" /><category term="deep-learning" /><category term="batch-normalization" /><category term="neural-networks" /><category term="optimization" /><category term="distributed-training" /><summary type="html"><![CDATA[A deep dive into Batch Normalization - from intuition to multi-GPU training, with visualizations and code examples.]]></summary></entry><entry><title type="html">Assembling objects with robots</title><link href="http://0.0.0.0:8080/blog/2024/Assembling/" rel="alternate" type="text/html" title="Assembling objects with robots" /><published>2024-02-18T00:00:00+00:00</published><updated>2024-02-18T00:00:00+00:00</updated><id>http://0.0.0.0:8080/blog/2024/Assembling</id><content type="html" xml:base="http://0.0.0.0:8080/blog/2024/Assembling/"><![CDATA[<h2 id="assembling-objects-with-robots">Assembling objects with robots</h2>
-
-<p>As a kid, you probably have had building blocks or puzzels that you put together and build up meaningful assemblies. These toys have a close relationship with the development of cognition in early childhood. As humans our skills develops rapidly with experience as we age until these tasks become so ordinary. However, attempting to endow these cognitive skills in robots is a massive challenge and a major research emphasis in the field of cognitive robotics. Cognitive robotics is a subfield of robotics that focuses on enabling robots to perform cognitive functions with artificial intelligence.</p>
-
-<figure align="center" style="padding-top: 20px; padding-bottom: 20px;">
-  <img src="https://developer-blogs.nvidia.com/wp-content/uploads/2023/05/IndustReal_Simtoreal.gif" />
-  <figcaption>  <p style="text-align: center; font-size: 12px"> source: <a href="https://developer.nvidia.com/blog/transferring-industrial-robot-assembly-tasks-from-simulation-to-reality/">  Transferring Industrial Robot Assembly Tasks from Simulation (NVIDIA Isaac) to Real</a></p> </figcaption>
-</figure>
-
-<p>This article is a literature review on the past and recent research related to robotic assembly. It belongs to a wide research domain called “assembly planing” which is jointly studied among fields such as  Computer Aided design(CAD), Manufacturing Industry, Robotics etc. However, expected research goals, problem definitions and solutions among the respective fields might be different from each other. This article attempts to identify, analyze and establish the idea of robotic assembly as a seperate research problem. While AI is a combination of various approaches to solve a certain problem autonomously, robotic assembling has been also approached using several methods such as visual language models (SORNET), Reinforecement learning, 3D perception and Computer vision etc.</p>
-
-<p><strong>However, the major emphasis of this article is robotic assembly manipulation via 3D pereception</strong>.
-For the convenience of the reader please follow the organisation and relevant queries of the article below :</p>
-
-<table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th>Section</th>
-      <th>Questions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td><a href="#the-bigger-picture">The bigger picture</a></td>
-      <td>- Where does robotic assembly manipulation stand in the bigger picture of process manufacturing? - How is it all connected?</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Assembling as a manipulation task</td>
-      <td>- How to define robotic assembly manipulation? - How is it different/similar from assembly process planning?</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Cognition for robotic manipulation</td>
-      <td>- How to endow cognitive capabilities for robots to perform assembling?</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>State of the Art</td>
-      <td>- What has been studied? - What has been achieved? - Challenges? - Research gaps? - Possible contributions?</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>List of references</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<hr />
-<h3 id="1-the-bigger-picture">1. The bigger picture</h3>
-
-<p>Assembling is a core aspect in manuifacturing processes. Hence, most of the past studies on object assembling has been from the point of view of process planning in manufacturing industry. The term <strong>Assembly Planning</strong> describes the process of combining several parts to a final product. Assembly Sequence Planning, Assembly line balancing, Assembly Path Planning. The importance of Assembly planning is maintenance, cost and time effectiveness, repair etc. They look at Ap as valuble feedback for design stage of products to achieve above targets in manufacturing process.</p>
-
-<p>However, the intended goals from persepective of cognitive robotics is different. Explain the difference. In above case the process planner ( a human) reveiews ( find more differences) complex constraints such as friction etc. In robotics the robot should take the decisions. This more difficult and might not have solutions all the time.</p>
-
-<p>probably a diagram explaining the domain</p>
-
-<p>But it is important to observe how humans think and then try to develop robot cognition through the same pattern of thinking.</p>
-
-<h3 id="2-assembling-as-a-manipulation-task">2. Assembling as a manipulation task</h3>
-
-<p>A manipulation task involves primary components such as a single or multiple robotic manipulators, a scene consisting of objects to be manipulated in their initial state and a goal state to be acheived. In certain cases, a human operator could also collaborate with a robot to perform the task.</p>
-
-<p>In an assembly manipulation task, there could be either individual objects or partly assembled objects in the scene. Ideally the robotic manipulator should be a robotic arm with a suitable degrees of freedom and a gripper that is capable of grasping the objects.</p>
-
-<p>The feasibility of an assembly task depends on several constraints. The objects and final assembly must be within the workspace of the robot. The assembly task should be achievable within the task space of the robot. An assembly sequence must exist to rearrange the objects from their initial state to final state. Furthermore, the robot should be capable of following a motion plan to acheive each step in the sequence.</p>
-
-<h3 id="cognition-for-robotic-assembly-manipulation">Cognition for robotic assembly manipulation</h3>
-
-<p>Cognition can be defined as the capability of the robotic setup to sense and analyze the environment and plan and execute acriopns tp o accomplish goals.Few example for  such primary goals are grasping, inspecting, painting, welding, assembling etc.</p>
-
-<p>The task of robotic assembling is process that extends from grasping. Additionally following comnponents are closely relhated to the cognition associated with assembling with a robot</p>
-
-<ol>
-  <li>Assembly sequence planning</li>
-  <li>Assembly pose estimation</li>
-  <li>planning the motion</li>
-</ol>
-
-<h3 id="state-of-the-art">State of the Art</h3>
-
-<h3 id="1-assembly-sequence-planning">1. Assembly Sequence planning</h3>
-
-<p>A 3D assembly is essentially constrained by the contacts with adjoining parts. Planning an assembly sequence at disassembled state requires defining motion constraints at each assembly step. However, it is easier plan disassembly since the geometric constraints are already defined in the assembled state. Therefore, <strong>Assembly by Disassembly Planning (ADP)</strong> has been a more prominent approache in planning assembly sequences.</p>
-
-<p>Some classical approaches on assembly sequence planning has been extensively reviewed by <a href="#Ghandi2015"> Ghandi et al(2015) </a>. In the absence of sophisticated physics simulators and computational resources, most of these early methods relied on analysing the geometry at the part design level. An attempt at geometrica reasoning about mechanical assembly was presented by <a href="#Latombe1994"> Wilson et al(1994)</a> which uses Non-blocking Diagrams(NDBS) akin to the Motion space concept in robotic motion planning. some more studies present utilizing <a href="#Tseng1999"> connector-based graphs</a> and <a href="#DeMello1990"> AND/OR graphs </a> for assembly sequence planning. These methods suffer when the complexity of the parts in assemblies increase. Furthermore, these methods donot count in external factors which affect assembly such as stability under gravity or friction.</p>
-
-<p><span id="global_caption_ref"></span></p>
-
-<div style="margin-top: 20px; margin-bottom: 20px;">
-    <div style="display: flex;">
-        <div style="flex: 1; margin-right: 10px; margin-top: 70px;">
-            <img src="/images/Assembly_Pose/dgb.png" alt="Image 1" style="width: 100%;" />
-            <p style="text-align: center; font-size: 12px; margin-top: 5px;"> (a) Directional Blocking Diagram</p>
-        </div>
-        <div style="flex: 1; margin-right: 10px;">
-            <img src="/images/Assembly_Pose/ndgb.png" alt="Image 2" style="width: 87%;" />
-            <p style="text-align: center; font-size: 12px; margin-top: 5px;"> (b) Non-Directional Blocking Diagram (partial)</p>
-        </div>
-    </div>
-    <p style="text-align: center; margin-top: -10px; font-size: 12px"> source: <a href="https://doi.org/10.1016/0004-3702(94)90048-5">  Wilson et al.(1994)</a></p>
-</div>
-
-<p>Later on, a study called <a href="#Tian2022"> “assemble them all”</a> expolits a physics-simulator for assembly sequence planning and assembly motion path planning (ASP) while checking the collsion between parts. Their sequence planner runs a bredth-first tree seach (BFS) to find a disassembly sequence while checking collisons. while this was an efficient for small assemblies the complexity increased exponentially with number of parts involved. They also attempted the problem assuming the assembly and parts were in mid air and did not consider factors such as stability, gravity or friction.</p>
-
-<p><a href="#Tian2023"> ASAP.(2023)</a> is a recent study which adress all the shortcoming mentioned in above method. Their study considers the feasibiltty in assembly sequence planning with suitable assembly poses which are stable under gravity. This is an important  consideration when implementing a sequence planner for a practical problem such as roboric assembly. Furthermore, they formulate the tree search algorithm to a Graph Neural Network (GNN) that learns on the pointclouds of input parts and infer the next part to be disassemnbled. However, the approach doesn’t seem to be robust against the number of parts in the assembly; meaning the GNN has to be trained for each set of assemblies with similar number of parts.</p>
-
-<div style="flex: 1; margin-right: 10px;">
-    <img src="http://asap.csail.mit.edu/static/images/SearchTree.jpg" style="width: 100%;" />
-    <p style="text-align: center;font-size: 12px; margin-top: 5px;"> (b) Disassembly tree </p>
-    <p style="text-align: center; margin-top: -10px; font-size: 12px"> source: <a href="http://asap.csail.mit.edu/">  ASAP:Automated Sequence Planning for Complex Robotic Assembly with Physical Feasibility</a></p>
-</div>
-
-<p><a href="#Zhu2023b"> Zhu et al.(2023)</a> introduced a transformer based solution based on ADP.(still under analysis)</p>
-
-<h3 id="2-assembly-pose-estimation">2. Assembly Pose estimation</h3>
-
-<p>There is a classification of approaches:</p>
-
-<p>Generalized approaches : trained on a category of objects can predict on any assembly in the category
-example : can assemble chairs/tables/lamps of any shape.</p>
-
-<p>Few contradictions in the literature. Although some work claim that they dont use any prior semantic knowledge but models are conditioned on a category that represents some sort of semantic knowledge abouty the assembly.
-Some generative methods learns on a set of points given that they belong to category ( conditioned) can do it on an unseen part! <a href="#Huang2020"> Huang et al.(2020)</a>. uses GNNs to learn the features and relationships between parts.(furniture assenbly)</p>
-
-<p>A similar work  <a href="#Harish2022"> RGL-NET.(2022)</a> focus on progressive part assembly, meaning that starting from any stage the robot can continue to complete the assembly (furniture assenbly)
-Another study <a href="#Zhang2022"> Zhang et al.(2022)</a> presents the capability to estimate assembly poses when the number of input parts is arbitrary or assembly is in mid-process. based an instance endcoded tranformer approach. a (furniture assenbly)</p>
-
-<p>Another approach <a href="#Chen2022">Neural shape mating</a>  which learns to mate two parts to an assembly. Although this work is limited to two objects, it works well when the two pointcloud splits are very noisy and exceeds GNNs in performance in such situations.
-A true category agnostic model. works well with unseen categories. also robust to unseen cut types</p>
-
-<p>Final approach <a href="#Li2023"> Rearrangement planning</a> is to assemble a known target with unseen part point clouds. they do this by estimating pointclouds to a segmented version of target pointcloud. then the pose of the assembled part is estimated as transformation from the given part to target segment. this is called a general part assembly transfomer.</p>
-
-<p>Specialized approach : trained to predict only on one assembly : similar to generic object pose assembly? or pointcloud registration methods?</p>
-
-<h3 id="3-motion-planning">3. Motion planning</h3>
-
-<h3 id="references">References</h3>
-
-<ol>
-
-<li id="Latombe1994">
-  <p>Wilson, R. H., &amp; Latombe, J. C. (1994). <em>Geometric reasoning about mechanical assembly</em>. Artificial Intelligence, 71(2). <a href="https://doi.org/10.1016/0004-3702(94)90048-5">https://doi.org/10.1016/0004-3702(94)90048-5</a></p>
-</li>
-
-<li id="Tseng1999">
-  <p>Tseng H-E, Li R-K. A novel means of generating assembly sequences using the connector concept. J Intell Manuf 1999;10:423–35. <a href="insert_URL_here">Link</a></p>
-</li>
-
-<li id="Ghandi2015" class="highlightable">
-  <p>Ghandi, S., &amp; Masehian, E. (2015). <em>Review and taxonomies of assembly and disassembly path planning problems and approaches</em>. <em>Computer-Aided Design, 67–68, 58–86. <a href="https://doi.org/10.1016/j.cad.2015.05.001">https://doi.org/10.1016/j.cad.2015.05.001</a></em>.</p>
-</li>
-
-<li id="Tian2022">
-  <p>Tian, Y., Xu, J., Li, Y., Luo, J., Sueda, S., Li, H., Willis, K. D. D., &amp; Matusik, W. (2022). <em>Assemble Them All</em>. <em>ACM Transactions on Graphics, 41(6). <a href="https://doi.org/10.1145/3550454.3555525">https://doi.org/10.1145/3550454.3555525</a></em>.</p>
-</li>
-
-<li id="Tian2023a">
-  <p>Tian, Y., Willis, K. D. D., Omari, B. al, Luo, J., Ma, P., Li, Y., Javid, F., Gu, E., Jacob, J., Sueda, S., Li, H., Chitta, S., &amp; Matusik, W. (2023). <em>ASAP: Automated Sequence Planning for Complex Robotic Assembly with Physical Feasibility</em>. <a href="http://arxiv.org/abs/2309.16909">http://arxiv.org/abs/2309.16909</a>.</p>
-</li>
-
-<li id="Zhu2023)">
-  <p>Zhu, X., Jha, D. K., Romeres, D., Sun, L., Tomizuka, M., &amp; Cherian, A. (2023) <em> Multi-level Reasoning for Robotic Assembly: From Sequence Inference to Contact Selection</em>. <a href="http://arxiv.org/abs/2312.10571">http://arxiv.org/abs/2312.10571</a>.</p>
-</li>
-
-<li id="Zhang2022">
-  <p>Zhang, R., Kong, T., Wang, W., Han, X., &amp; You, M. (2022). <em>3D Part Assembly Generation with Instance Encoded Transformer</em>. IEEE Robotics and Automation Letters, 7(4). <a href="https://doi.org/10.1109/LRA.2022.3188098">https://doi.org/10.1109/LRA.2022.3188098</a>.</p>
-</li>
-
-<li id="Narang2022">
-  <p>Narang, Y., Storey, K., Akinola, I., Macklin, M., Reist, P., Wawrzyniak, L., Guo, Y., Moravanszky, A., State, G., Lu, M., Handa, A., &amp; Fox, D. (2022). <em>Factory: Fast Contact for Robotic Assembly</em>. Robotics: Science and Systems. <a href="https://doi.org/10.15607/RSS.2022.XVIII.035">https://doi.org/10.15607/RSS.2022.XVIII.035</a>.</p>
-</li>
-
-<li id="Huang2020">
-  <p>Huang, J., Zhan, G., Fan, Q., Mo, K., Shao, L., Chen, B., Guibas, L., &amp; Dong, H. (2020). <em>Generative 3D part assembly via dynamic graph learning</em>. Advances in Neural Information Processing Systems, 2020-December.</p>
-</li>
-
-<li id="Wu2023">
-  <p>Wu, R., Tie, C., Du, Y., Zhao, Y., &amp; Dong, H. (2023). <em>Leveraging SE(3) Equivariance for Learning 3D Geometric Shape Assembly</em>. <a href="http://arxiv.org/abs/2309.06810">http://arxiv.org/abs/2309.06810</a>.</p>
-</li>
-
-<li id="Chen2022">
-  <p>Chen, Y. C., Li, H., Turpin, D., Jacobson, A., &amp; Garg, A. (2022). <em>Neural Shape Mating: Self-Supervised Object Assembly with Adversarial Shape Priors</em>. Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition, 2022-June. <a href="https://doi.org/10.1109/CVPR52688.2022.01239">https://doi.org/10.1109/CVPR52688.2022.01239</a>.</p>
-</li>
-
-<li id="Li2023">
-  <p>Li, Y., Zeng, A., &amp; Song, S. (2023). <em>Rearrangement Planning for General Part Assembly</em>. <a href="https://general-part-assembly.github.io/">https://general-part-assembly.github.io/</a>.</p>
-</li>
-
-<li id="Harish2022">
-  <p>Harish, A. N., Nagar, R., &amp; Raman, S. (2022). <em>RGL-NET: A Recurrent Graph Learning framework for Progressive Part Assembly</em>. Proceedings - 2022 IEEE/CVF Winter Conference on Applications of Computer Vision, WACV 2022. <a href="https://doi.org/10.1109/WACV51458.2022.00072">https://doi.org/10.1109/WACV51458.2022.00072</a>.</p>
-</li>
-
-<li id="DeMello1990">
-  <p>Homem De Mello LS, Sanderson AC. AND/OR graph representation of assembly plans. IEEE Trans. Robot. Autom. 1990;6:188–99. <a href="insert_URL_here">Link</a></p>
-</li>
-
-
-
-</ol>]]></content><author><name></name></author><category term="&lt;span id=&quot;hashtag&quot;&gt;#Assembly&lt;/span&gt;  &lt;span id=&quot;hashtag&quot;&gt;#Perception&lt;/span&gt;" /><summary type="html"><![CDATA[Assembling objects with robots]]></summary></entry></feed>
+</code></pre></div></div> <h2 id="6-multi-gpu-running-stats-advanced">6. Multi GPU Running Stats (ADVANCED)</h2> <p><strong>Key Challenge in Multi-GPU Training</strong></p> <p>In multi-GPU setups:</p> <ul> <li>Each GPU processes its own mini-batch of data independently.</li> <li>Batch Normalization is designed to compute the mean and variance for the entire mini-batch across the GPUs, but each GPU initially only “sees” the activations of its local mini-batch.</li> </ul> <p><strong>Example:</strong></p> <p>If:</p> <ul> <li>Batch size per GPU = 32</li> <li>Number of GPUs = 3</li> </ul> <p>The total batch size is $32 \times 3 = 96$.</p> <p>However:</p> <ul> <li>GPU 1 computes statistics for its 32 samples.</li> <li>GPU 2 computes statistics for its 32 samples.</li> <li>GPU 3 computes statistics for its 32 samples.</li> </ul> <p>This results in local batch statistics on each GPU, which are insufficient for calculating global statistics across all 96 samples.</p> <p><strong>Solution: Synchronizing Batch Statistics</strong></p> <p>To solve this, synchronized Batch Normalization (SyncBN) is used. Here’s how it works:</p> <p><strong>Step 1: Compute Local Statistics</strong></p> <p>Each GPU computes the mean ($\mu_{\text{local}}$) and variance ($\sigma_{\text{local}}^2$) for its local mini-batch of size 32.</p> <p><strong>Step 2: All-Reduce Operation</strong></p> <p>The local statistics from all GPUs are aggregated using a collective communication operation called all-reduce. This operation computes the global mean and variance by:</p> <ul> <li>Summing the local means and variances from all GPUs.</li> <li>Dividing by the total number of samples ($32 \times 3 = 96$) to compute the global statistics.</li> </ul> <p><strong>Formulas:</strong></p> <p>Global Mean:</p> \[\mu_{\text{global}} = \frac{\sum_{g=1}^{N} \left( \mu_{\text{local}, g} \cdot \text{batch\_size}_g \right)}{\text{total\_batch\_size}}\] <p>Global Variance:</p> \[\sigma_{\text{global}}^2 = \frac{\sum_{g=1}^{N} \left( \sigma_{\text{local}, g}^2 + \left( \mu_{\text{local}, g} - \mu_{\text{global}} \right)^2 \right) \cdot \text{batch\_size}_g}{\text{total\_batch\_size}}\] <p>Where:</p> <ul> <li>$N$: Number of GPUs.</li> <li>$\text{batch_size}_g$: Mini-batch size on GPU $g$.</li> </ul> <h3 id="61-running-statistics-in-multi-gpu-training">6.1 Running Statistics in Multi-GPU Training</h3> <p>When it comes to the running statistics (e.g., running mean and variance used during inference):</p> <ul> <li>After each mini-batch: <ul> <li>The global statistics ($\mu_{\text{global}}$ and $\sigma_{\text{global}}^2$) are computed using the method above.</li> <li>Update the running statistics using the same moving average formula:</li> </ul> </li> </ul> \[\mu_{\text{running}} \gets (1 - \alpha) \cdot \mu_{\text{running}} + \alpha \cdot \mu_{\text{global}}\] \[\sigma_{\text{running}}^2 \gets (1 - \alpha) \cdot \sigma_{\text{running}}^2 + \alpha \cdot \sigma_{\text{global}}^2\] <p>Thus, the running statistics reflect the global behavior of the activations across all GPUs.</p> <h3 id="62-why-syncbn-is-important">6.2 Why SyncBN Is Important</h3> <p>Without synchronized Batch Normalization:</p> <ul> <li>Each GPU would compute statistics based only on its local mini-batch.</li> <li>This could lead to inconsistent normalization and harm the model’s performance, especially when the total batch size is large or the batch size per GPU is small.</li> </ul> <h3 id="63-alternatives-to-syncbn">6.3 Alternatives to SyncBN</h3> <p>When SyncBN is impractical or expensive:</p> <ul> <li><strong>Group Normalization (GN):</strong> Divides channels into groups and normalizes them within each group, removing the need for batch-wide statistics.</li> <li><strong>Instance Normalization (IN):</strong> Normalizes each sample independently.</li> <li><strong>Layer Normalization (LN):</strong> Normalizes across the features of each input independently of the batch size.</li> </ul> <p>These alternatives avoid the need for synchronization but might have different performance characteristics.</p> <h3 id="64-summary">6.4 Summary</h3> <p>In multi-GPU training, synchronized Batch Normalization is used to compute global mean and variance across all GPUs.</p> <ul> <li>The local statistics on each GPU are aggregated using an all-reduce operation.</li> <li>The running statistics (used for inference) are updated based on the global statistics, ensuring consistency across GPUs.</li> <li>SyncBN is critical for maintaining consistent normalization across all GPUs, especially in distributed setups.</li> </ul>]]></content><author><name>Kulunu Samarawickrama</name></author><summary type="html"><![CDATA[A deep dive into Batch Normalization - from intuition to multi-GPU training, with visualizations and code examples.]]></summary></entry><entry><title type="html">Assembling objects with robots</title><link href="https://kulunuos.github.io/blog/2024/Assembling/" rel="alternate" type="text/html" title="Assembling objects with robots"/><published>2024-02-18T00:00:00+00:00</published><updated>2024-02-18T00:00:00+00:00</updated><id>https://kulunuos.github.io/blog/2024/Assembling</id><content type="html" xml:base="https://kulunuos.github.io/blog/2024/Assembling/"><![CDATA[<h2 id="assembling-objects-with-robots">Assembling objects with robots</h2> <p>As a kid, you probably have had building blocks or puzzels that you put together and build up meaningful assemblies. These toys have a close relationship with the development of cognition in early childhood. As humans our skills develops rapidly with experience as we age until these tasks become so ordinary. However, attempting to endow these cognitive skills in robots is a massive challenge and a major research emphasis in the field of cognitive robotics. Cognitive robotics is a subfield of robotics that focuses on enabling robots to perform cognitive functions with artificial intelligence.</p> <figure align="center" style="padding-top: 20px; padding-bottom: 20px;"> <img src="https://developer-blogs.nvidia.com/wp-content/uploads/2023/05/IndustReal_Simtoreal.gif"/> <figcaption> <p style="text-align: center; font-size: 12px"> source: <a href="https://developer.nvidia.com/blog/transferring-industrial-robot-assembly-tasks-from-simulation-to-reality/"> Transferring Industrial Robot Assembly Tasks from Simulation (NVIDIA Isaac) to Real</a></p> </figcaption> </figure> <p>This article is a literature review on the past and recent research related to robotic assembly. It belongs to a wide research domain called “assembly planing” which is jointly studied among fields such as Computer Aided design(CAD), Manufacturing Industry, Robotics etc. However, expected research goals, problem definitions and solutions among the respective fields might be different from each other. This article attempts to identify, analyze and establish the idea of robotic assembly as a seperate research problem. While AI is a combination of various approaches to solve a certain problem autonomously, robotic assembling has been also approached using several methods such as visual language models (SORNET), Reinforecement learning, 3D perception and Computer vision etc.</p> <p><strong>However, the major emphasis of this article is robotic assembly manipulation via 3D pereception</strong>. For the convenience of the reader please follow the organisation and relevant queries of the article below :</p> <table> <thead> <tr> <th> </th> <th>Section</th> <th>Questions</th> </tr> </thead> <tbody> <tr> <td>1</td> <td><a href="#the-bigger-picture">The bigger picture</a></td> <td>- Where does robotic assembly manipulation stand in the bigger picture of process manufacturing? - How is it all connected?</td> </tr> <tr> <td>2</td> <td>Assembling as a manipulation task</td> <td>- How to define robotic assembly manipulation? - How is it different/similar from assembly process planning?</td> </tr> <tr> <td>3</td> <td>Cognition for robotic manipulation</td> <td>- How to endow cognitive capabilities for robots to perform assembling?</td> </tr> <tr> <td>4</td> <td>State of the Art</td> <td>- What has been studied? - What has been achieved? - Challenges? - Research gaps? - Possible contributions?</td> </tr> <tr> <td>5</td> <td>List of references</td> <td> </td> </tr> </tbody> </table> <hr/> <h3 id="1-the-bigger-picture">1. The bigger picture</h3> <p>Assembling is a core aspect in manuifacturing processes. Hence, most of the past studies on object assembling has been from the point of view of process planning in manufacturing industry. The term <strong>Assembly Planning</strong> describes the process of combining several parts to a final product. Assembly Sequence Planning, Assembly line balancing, Assembly Path Planning. The importance of Assembly planning is maintenance, cost and time effectiveness, repair etc. They look at Ap as valuble feedback for design stage of products to achieve above targets in manufacturing process.</p> <p>However, the intended goals from persepective of cognitive robotics is different. Explain the difference. In above case the process planner ( a human) reveiews ( find more differences) complex constraints such as friction etc. In robotics the robot should take the decisions. This more difficult and might not have solutions all the time.</p> <p>probably a diagram explaining the domain</p> <p>But it is important to observe how humans think and then try to develop robot cognition through the same pattern of thinking.</p> <h3 id="2-assembling-as-a-manipulation-task">2. Assembling as a manipulation task</h3> <p>A manipulation task involves primary components such as a single or multiple robotic manipulators, a scene consisting of objects to be manipulated in their initial state and a goal state to be acheived. In certain cases, a human operator could also collaborate with a robot to perform the task.</p> <p>In an assembly manipulation task, there could be either individual objects or partly assembled objects in the scene. Ideally the robotic manipulator should be a robotic arm with a suitable degrees of freedom and a gripper that is capable of grasping the objects.</p> <p>The feasibility of an assembly task depends on several constraints. The objects and final assembly must be within the workspace of the robot. The assembly task should be achievable within the task space of the robot. An assembly sequence must exist to rearrange the objects from their initial state to final state. Furthermore, the robot should be capable of following a motion plan to acheive each step in the sequence.</p> <h3 id="cognition-for-robotic-assembly-manipulation">Cognition for robotic assembly manipulation</h3> <p>Cognition can be defined as the capability of the robotic setup to sense and analyze the environment and plan and execute acriopns tp o accomplish goals.Few example for such primary goals are grasping, inspecting, painting, welding, assembling etc.</p> <p>The task of robotic assembling is process that extends from grasping. Additionally following comnponents are closely relhated to the cognition associated with assembling with a robot</p> <ol> <li>Assembly sequence planning</li> <li>Assembly pose estimation</li> <li>planning the motion</li> </ol> <h3 id="state-of-the-art">State of the Art</h3> <h3 id="1-assembly-sequence-planning">1. Assembly Sequence planning</h3> <p>A 3D assembly is essentially constrained by the contacts with adjoining parts. Planning an assembly sequence at disassembled state requires defining motion constraints at each assembly step. However, it is easier plan disassembly since the geometric constraints are already defined in the assembled state. Therefore, <strong>Assembly by Disassembly Planning (ADP)</strong> has been a more prominent approache in planning assembly sequences.</p> <p>Some classical approaches on assembly sequence planning has been extensively reviewed by <a href="#Ghandi2015"> Ghandi et al(2015) </a>. In the absence of sophisticated physics simulators and computational resources, most of these early methods relied on analysing the geometry at the part design level. An attempt at geometrica reasoning about mechanical assembly was presented by <a href="#Latombe1994"> Wilson et al(1994)</a> which uses Non-blocking Diagrams(NDBS) akin to the Motion space concept in robotic motion planning. some more studies present utilizing <a href="#Tseng1999"> connector-based graphs</a> and <a href="#DeMello1990"> AND/OR graphs </a> for assembly sequence planning. These methods suffer when the complexity of the parts in assemblies increase. Furthermore, these methods donot count in external factors which affect assembly such as stability under gravity or friction.</p> <p><span id="global_caption_ref"></span></p> <div style="margin-top: 20px; margin-bottom: 20px;"> <div style="display: flex;"> <div style="flex: 1; margin-right: 10px; margin-top: 70px;"> <img src="/images/Assembly_Pose/dgb.png" alt="Image 1" style="width: 100%;"/> <p style="text-align: center; font-size: 12px; margin-top: 5px;"> (a) Directional Blocking Diagram</p> </div> <div style="flex: 1; margin-right: 10px;"> <img src="/images/Assembly_Pose/ndgb.png" alt="Image 2" style="width: 87%;"/> <p style="text-align: center; font-size: 12px; margin-top: 5px;"> (b) Non-Directional Blocking Diagram (partial)</p> </div> </div> <p style="text-align: center; margin-top: -10px; font-size: 12px"> source: <a href="https://doi.org/10.1016/0004-3702(94)90048-5"> Wilson et al.(1994)</a></p> </div> <p>Later on, a study called <a href="#Tian2022"> “assemble them all”</a> expolits a physics-simulator for assembly sequence planning and assembly motion path planning (ASP) while checking the collsion between parts. Their sequence planner runs a bredth-first tree seach (BFS) to find a disassembly sequence while checking collisons. while this was an efficient for small assemblies the complexity increased exponentially with number of parts involved. They also attempted the problem assuming the assembly and parts were in mid air and did not consider factors such as stability, gravity or friction.</p> <p><a href="#Tian2023"> ASAP.(2023)</a> is a recent study which adress all the shortcoming mentioned in above method. Their study considers the feasibiltty in assembly sequence planning with suitable assembly poses which are stable under gravity. This is an important consideration when implementing a sequence planner for a practical problem such as roboric assembly. Furthermore, they formulate the tree search algorithm to a Graph Neural Network (GNN) that learns on the pointclouds of input parts and infer the next part to be disassemnbled. However, the approach doesn’t seem to be robust against the number of parts in the assembly; meaning the GNN has to be trained for each set of assemblies with similar number of parts.</p> <div style="flex: 1; margin-right: 10px;"> <img src="http://asap.csail.mit.edu/static/images/SearchTree.jpg" style="width: 100%;"/> <p style="text-align: center;font-size: 12px; margin-top: 5px;"> (b) Disassembly tree </p> <p style="text-align: center; margin-top: -10px; font-size: 12px"> source: <a href="http://asap.csail.mit.edu/"> ASAP:Automated Sequence Planning for Complex Robotic Assembly with Physical Feasibility</a></p> </div> <p><a href="#Zhu2023b"> Zhu et al.(2023)</a> introduced a transformer based solution based on ADP.(still under analysis)</p> <h3 id="2-assembly-pose-estimation">2. Assembly Pose estimation</h3> <p>There is a classification of approaches:</p> <p>Generalized approaches : trained on a category of objects can predict on any assembly in the category example : can assemble chairs/tables/lamps of any shape.</p> <p>Few contradictions in the literature. Although some work claim that they dont use any prior semantic knowledge but models are conditioned on a category that represents some sort of semantic knowledge abouty the assembly. Some generative methods learns on a set of points given that they belong to category ( conditioned) can do it on an unseen part! <a href="#Huang2020"> Huang et al.(2020)</a>. uses GNNs to learn the features and relationships between parts.(furniture assenbly)</p> <p>A similar work <a href="#Harish2022"> RGL-NET.(2022)</a> focus on progressive part assembly, meaning that starting from any stage the robot can continue to complete the assembly (furniture assenbly) Another study <a href="#Zhang2022"> Zhang et al.(2022)</a> presents the capability to estimate assembly poses when the number of input parts is arbitrary or assembly is in mid-process. based an instance endcoded tranformer approach. a (furniture assenbly)</p> <p>Another approach <a href="#Chen2022">Neural shape mating</a> which learns to mate two parts to an assembly. Although this work is limited to two objects, it works well when the two pointcloud splits are very noisy and exceeds GNNs in performance in such situations. A true category agnostic model. works well with unseen categories. also robust to unseen cut types</p> <p>Final approach <a href="#Li2023"> Rearrangement planning</a> is to assemble a known target with unseen part point clouds. they do this by estimating pointclouds to a segmented version of target pointcloud. then the pose of the assembled part is estimated as transformation from the given part to target segment. this is called a general part assembly transfomer.</p> <p>Specialized approach : trained to predict only on one assembly : similar to generic object pose assembly? or pointcloud registration methods?</p> <h3 id="3-motion-planning">3. Motion planning</h3> <h3 id="references">References</h3> <ol> <li id="Latombe1994"> <p>Wilson, R. H., &amp; Latombe, J. C. (1994). <em>Geometric reasoning about mechanical assembly</em>. Artificial Intelligence, 71(2). <a href="https://doi.org/10.1016/0004-3702(94)90048-5">https://doi.org/10.1016/0004-3702(94)90048-5</a></p> </li> <li id="Tseng1999"> <p>Tseng H-E, Li R-K. A novel means of generating assembly sequences using the connector concept. J Intell Manuf 1999;10:423–35. <a href="insert_URL_here">Link</a></p> </li> <li id="Ghandi2015" class="highlightable"> <p>Ghandi, S., &amp; Masehian, E. (2015). <em>Review and taxonomies of assembly and disassembly path planning problems and approaches</em>. <em>Computer-Aided Design, 67–68, 58–86. <a href="https://doi.org/10.1016/j.cad.2015.05.001">https://doi.org/10.1016/j.cad.2015.05.001</a></em>.</p> </li> <li id="Tian2022"> <p>Tian, Y., Xu, J., Li, Y., Luo, J., Sueda, S., Li, H., Willis, K. D. D., &amp; Matusik, W. (2022). <em>Assemble Them All</em>. <em>ACM Transactions on Graphics, 41(6). <a href="https://doi.org/10.1145/3550454.3555525">https://doi.org/10.1145/3550454.3555525</a></em>.</p> </li> <li id="Tian2023a"> <p>Tian, Y., Willis, K. D. D., Omari, B. al, Luo, J., Ma, P., Li, Y., Javid, F., Gu, E., Jacob, J., Sueda, S., Li, H., Chitta, S., &amp; Matusik, W. (2023). <em>ASAP: Automated Sequence Planning for Complex Robotic Assembly with Physical Feasibility</em>. <a href="http://arxiv.org/abs/2309.16909">http://arxiv.org/abs/2309.16909</a>.</p> </li> <li id="Zhu2023)"> <p>Zhu, X., Jha, D. K., Romeres, D., Sun, L., Tomizuka, M., &amp; Cherian, A. (2023) <em> Multi-level Reasoning for Robotic Assembly: From Sequence Inference to Contact Selection</em>. <a href="http://arxiv.org/abs/2312.10571">http://arxiv.org/abs/2312.10571</a>.</p> </li> <li id="Zhang2022"> <p>Zhang, R., Kong, T., Wang, W., Han, X., &amp; You, M. (2022). <em>3D Part Assembly Generation with Instance Encoded Transformer</em>. IEEE Robotics and Automation Letters, 7(4). <a href="https://doi.org/10.1109/LRA.2022.3188098">https://doi.org/10.1109/LRA.2022.3188098</a>.</p> </li> <li id="Narang2022"> <p>Narang, Y., Storey, K., Akinola, I., Macklin, M., Reist, P., Wawrzyniak, L., Guo, Y., Moravanszky, A., State, G., Lu, M., Handa, A., &amp; Fox, D. (2022). <em>Factory: Fast Contact for Robotic Assembly</em>. Robotics: Science and Systems. <a href="https://doi.org/10.15607/RSS.2022.XVIII.035">https://doi.org/10.15607/RSS.2022.XVIII.035</a>.</p> </li> <li id="Huang2020"> <p>Huang, J., Zhan, G., Fan, Q., Mo, K., Shao, L., Chen, B., Guibas, L., &amp; Dong, H. (2020). <em>Generative 3D part assembly via dynamic graph learning</em>. Advances in Neural Information Processing Systems, 2020-December.</p> </li> <li id="Wu2023"> <p>Wu, R., Tie, C., Du, Y., Zhao, Y., &amp; Dong, H. (2023). <em>Leveraging SE(3) Equivariance for Learning 3D Geometric Shape Assembly</em>. <a href="http://arxiv.org/abs/2309.06810">http://arxiv.org/abs/2309.06810</a>.</p> </li> <li id="Chen2022"> <p>Chen, Y. C., Li, H., Turpin, D., Jacobson, A., &amp; Garg, A. (2022). <em>Neural Shape Mating: Self-Supervised Object Assembly with Adversarial Shape Priors</em>. Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition, 2022-June. <a href="https://doi.org/10.1109/CVPR52688.2022.01239">https://doi.org/10.1109/CVPR52688.2022.01239</a>.</p> </li> <li id="Li2023"> <p>Li, Y., Zeng, A., &amp; Song, S. (2023). <em>Rearrangement Planning for General Part Assembly</em>. <a href="https://general-part-assembly.github.io/">https://general-part-assembly.github.io/</a>.</p> </li> <li id="Harish2022"> <p>Harish, A. N., Nagar, R., &amp; Raman, S. (2022). <em>RGL-NET: A Recurrent Graph Learning framework for Progressive Part Assembly</em>. Proceedings - 2022 IEEE/CVF Winter Conference on Applications of Computer Vision, WACV 2022. <a href="https://doi.org/10.1109/WACV51458.2022.00072">https://doi.org/10.1109/WACV51458.2022.00072</a>.</p> </li> <li id="DeMello1990"> <p>Homem De Mello LS, Sanderson AC. AND/OR graph representation of assembly plans. IEEE Trans. Robot. Autom. 1990;6:188–99. <a href="insert_URL_here">Link</a></p> </li> </ol>]]></content><author><name></name></author><category term="&lt;span id=&quot;hashtag&quot;&gt;#Assembly&lt;/span&gt; &lt;span id=&quot;hashtag&quot;&gt;#Perception&lt;/span&gt;"/><summary type="html"><![CDATA[Assembling objects with robots]]></summary></entry></feed>
